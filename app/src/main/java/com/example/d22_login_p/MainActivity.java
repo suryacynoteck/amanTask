@@ -3,6 +3,7 @@ package com.example.d22_login_p;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -10,9 +11,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.d22_login_p.api_interface.ApiClient;
+import com.example.d22_login_p.model.LoginRequest;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.regex.Pattern;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,14 +50,17 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
+                login();
 
-                Toast.makeText(MainActivity.this, "Login Button Clicked", Toast.LENGTH_SHORT).show();
+
+
+
             }
         });
 
 
 
-        //----------------xforgot passx--------------xregisterx-------------------
+        //----------------x--forgot pass--x--------------xregisterx-------------------
 
         txt_Register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +73,43 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "this is forgot password", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void login() {
+
+
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setEmail(email.getText().toString());
+        loginRequest.setPassword(password.getEditText().getText().toString());
+
+
+
+        Call<LoginRequest> loginResponseCall = ApiClient.getUserService().userLogin(loginRequest);
+        loginResponseCall.enqueue(new Callback<LoginRequest>() {
+            @Override
+            public void onResponse(Call<LoginRequest> call, Response<LoginRequest> response) {
+
+                if (response.isSuccessful()) {
+
+                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+
+                    Log.d("okok", "Response Code : " + response.code());
+
+
+                } else {
+                    Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginRequest> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Throwable: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
