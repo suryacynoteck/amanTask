@@ -23,11 +23,11 @@
         android:id="@+id/edit_txt_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+
         android:layout_marginTop="38dp"
 
         android:layout_marginEnd="40dp"
-
+        android:layout_marginStart="40dp"
 
         android:ems="10"
         android:hint="Email address"
@@ -121,6 +121,9 @@
         android:layout_marginTop="16dp"
         app:passwordToggleEnabled="true"
 
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+
         app:hintTextColor="#9A9792"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -131,10 +134,12 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
+
             android:background="#FFFFFF"
             android:textSize="20dp"
+
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
 
 
             android:hint="Password"
