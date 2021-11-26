@@ -12,7 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.d22_login_p.api_interface.ApiClient;
+import com.example.d22_login_p.api_interface.UserService;
 import com.example.d22_login_p.model.LoginRequest;
+import com.example.d22_login_p.model.LoginResponse;
 import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
@@ -26,10 +28,13 @@ public class MainActivity extends AppCompatActivity {
     TextView txt_forgot_pass , txt_Register;
     Button btn_login;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+
 
         email = findViewById(R.id.edit_txt_email);
         password = findViewById(R.id.edit_txt_pass);
@@ -41,18 +46,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (!validate_email() | !validate_password()) {
-                    return;
-                }
+//                if (!validate_email() | !validate_password()) {
+//                    return;
+//                }
+
 
                 login();
-
-
 
 
             }
@@ -80,25 +83,58 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login() {
-
+        Log.d("okok", "inside login");
 
         LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setEmail(email.getText().toString());
-        loginRequest.setPassword(password.getEditText().getText().toString());
+/*
+        String email2 = email.getText().toString();
+        String password2 = password.getEditText().getText().toString();
 
 
 
-        Call<LoginRequest> loginResponseCall = ApiClient.getUserService().userLogin(loginRequest);
-        loginResponseCall.enqueue(new Callback<LoginRequest>() {
+        Log.d("get", "email: " + email2);                     // working fine
+        Log.d("get", "password: " + password2);
+ */
+
+//        loginRequest.getData().setEmail(email2);                                  //TODO:   find a sol.
+//        Log.d("get", "after setting email" + loginRequest.getData().getEmail());
+
+
+
+
+        Log.d("okok", "1");
+
+
+
+//        loginRequest.setDeviceId("fa7dddece5deec1e"); // device id get
+//        Toast.makeText(MainActivity.this, "Toast:1", Toast.LENGTH_SHORT).show();
+
+
+//        Call<LoginResponse> loginResponseCall = ApiClient.getUserService().userLogin(loginRequest);  //  <<
+
+        Call<LoginResponse> loginResponseCall = ApiClient.getUserService().userLogin("vet.petofy@gmail.com","pass@123");
+        Log.d("okok", "2");
+        loginResponseCall.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginRequest> call, Response<LoginRequest> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+//                Toast.makeText(MainActivity.this, "Toast:2", Toast.LENGTH_SHORT).show();
+                Log.d("okok", "3");
 
+                Log.d("okok", "4");
+                LoginResponse loginResponse = response.body();
+
+
+
+                Log.d("okok", "Response Code : " + response.code());
+
+                //TODO:  response code 400 comming
                 if (response.isSuccessful()) {
 
+                    Log.d("okok", "Response Code : " + loginResponse.getData().getPhoneNumber());
+                    Log.d("okok", "Response Code : " + loginResponse.getData().getFirstName());
+                    Log.d("okok", "Response Code : " + loginResponse.getData().getAddress());
+
                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-
-                    Log.d("okok", "Response Code : " + response.code());
-
 
                 } else {
                     Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
@@ -108,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginRequest> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Throwable: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
