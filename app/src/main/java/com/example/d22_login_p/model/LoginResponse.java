@@ -1,11 +1,6 @@
-
-
         package com.example.d22_login_p.model;
-
-
         import com.google.gson.annotations.Expose;
         import com.google.gson.annotations.SerializedName;
-
         import java.util.List;
 
 
@@ -103,6 +98,16 @@
                         this.redirectUrl = redirectUrl;
                 }
 
+                @Override
+                public String toString() {
+                        return "Response{" +
+                                "responseCode=" + responseCode +
+                                ", responseMessage='" + responseMessage + '\'' +
+                                ", token='" + token + '\'' +
+                                ", value=" + value +
+                                ", redirectUrl='" + redirectUrl + '\'' +
+                                '}';
+                }
         }
 
         public class Data {
@@ -862,4 +867,13 @@
                 }
 
         }
-}
+
+                @Override
+                public String toString() {
+                        return "LoginResponse{" +
+                                "header=" + header +
+                                ", data=" + data +
+                                ", response=" + response +
+                                '}';
+                }
+        }

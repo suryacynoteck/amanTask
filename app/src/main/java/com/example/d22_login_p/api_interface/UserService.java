@@ -1,5 +1,6 @@
 package com.example.d22_login_p.api_interface;
 
+import com.example.d22_login_p.model.LoginParams;
 import com.example.d22_login_p.model.LoginRequest;
 import com.example.d22_login_p.model.LoginResponse;
 
@@ -12,10 +13,9 @@ import retrofit2.http.POST;
 
 public interface UserService {
 
-    @FormUrlEncoded
-    @Headers({"Accept: application/json"})
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("User/Login")
-//    Call<LoginResponse> userLogin(@Body LoginRequest loginRequest);
-    Call<LoginResponse> userLogin(@Field("Email") String email, @Field("Password") String password);
+    Call<LoginResponse> userLogin(@Body LoginRequest loginparams);
 
 }
