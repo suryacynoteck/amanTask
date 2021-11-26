@@ -12,9 +12,6 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface UserService {
-
-
-    @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("User/Login")
     Call<LoginResponse> userLogin(@Body LoginRequest loginparams);
 

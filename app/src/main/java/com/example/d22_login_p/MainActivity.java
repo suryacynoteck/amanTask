@@ -32,13 +32,15 @@ public class MainActivity extends AppCompatActivity {
     Button btn_login;
     private String email_user, pass_user;
     private TextInputEditText pass_edt;
+    private UserService apiInterface;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        apiInterface = ApiClient.getClient(this).create(UserService.class);
         email = findViewById(R.id.edit_txt_email);
         password = findViewById(R.id.edit_txt_pass);
         pass_edt = findViewById(R.id.pass_edt);
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void login(LoginRequest loginReqParam) {
-        Call<LoginResponse> loginResponseCall = ApiClient.getUserService().userLogin(loginReqParam);
+        Call<LoginResponse> loginResponseCall = apiInterface.userLogin(loginReqParam);
         loginResponseCall.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
