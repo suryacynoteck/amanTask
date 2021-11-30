@@ -1,141 +1,131 @@
 package com.example.d22_login_p;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
-import android.util.Patterns;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.LogTime;
-import com.example.d22_login_p.api_interface.ApiClient;
-import com.example.d22_login_p.api_interface.UserService;
-import com.example.d22_login_p.model.LoginParams;
-import com.example.d22_login_p.model.LoginRequest;
 import com.example.d22_login_p.model.LoginResponse;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.navigation.NavigationView;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
-    EditText email;
-    TextInputLayout password;
-    TextView txt_forgot_pass, txt_Register;
-    Button btn_login;
-    private String email_user, pass_user;
-    private TextInputEditText pass_edt;
-    private UserService apiInterface;
 
+    NavigationView nav;
+    ActionBarDrawerToggle toggle;
+    DrawerLayout drawerLayout;
+
+    LoginResponse loginResponse;        
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        apiInterface = ApiClient.getClient(this).create(UserService.class);
-        email = findViewById(R.id.edit_txt_email);
-        password = findViewById(R.id.edit_txt_pass);
-        pass_edt = findViewById(R.id.pass_edt);
+//        getActionBar().hide();
 
-        txt_forgot_pass = findViewById(R.id.txt_forgot_pass);
-        txt_Register = findViewById(R.id.txt_Registernow);
+        Toolbar  toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        btn_login = findViewById(R.id.button);
+        nav = findViewById(R.id.navmenu);
+        drawerLayout = findViewById(R.id.drawer);
+
+        // setting toggle bar ,,   via code
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+                                //  gettting Info from  Bundle ,,,  from LoginActivity
+        Bundle bundle = getIntent().getExtras();
+
+        String head_txt = bundle.getString("head_txt");
+        String subhead_txt = bundle.getString("subhead_txt");
+
+        // accessgin Header fields ( txt_head &  txt_subtext)
+        View head = nav.getHeaderView(0);
+        TextView txt_head = head.findViewById(R.id.txt_Head);
+        txt_head.setText(head_txt);
+
+        TextView txt_subhead = head.findViewById(R.id.txt_subHead);
+        txt_subhead.setText(subhead_txt);
+
+        //TODO: why crashing    , cannot access  via obj.
+//        Log.d("okok", "Email received in MainActivity: " + loginResponse.getData().getEmail());
 
 
-
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                email_user = email.getText().toString();
-                pass_user = pass_edt.getText().toString();
-                LoginRequest loginRequest = new LoginRequest();
-                LoginParams params = new LoginParams();
-                params.setEmail(email_user);
-                params.setPassword(pass_user);
-                loginRequest.setData(params);
-                login(loginRequest);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-            }
-        });
+                switch (item.getItemId()) {
+                    
+                    case R.id.menu_home:
+                        Toast.makeText(getApplicationContext(), "Home Panel is Open", Toast.LENGTH_SHORT).show();
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
 
-        //----------------x--forgot pass--x--------------xregisterx-------------------
-        txt_Register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Registering...", Toast.LENGTH_SHORT).show();
-            }
-        });
-        txt_forgot_pass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "this is forgot password", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-    private void login(LoginRequest loginReqParam) {
-        Call<LoginResponse> loginResponseCall = apiInterface.userLogin(loginReqParam);
-        loginResponseCall.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    case R.id.menu_setting:
+                        Toast.makeText(getApplicationContext(),"setting is Open",Toast.LENGTH_LONG).show();
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
 
-                if (response.isSuccessful()) {
-                    LoginResponse loginResponse = response.body();
-                    Log.d(TAG, "onResponse: "+loginResponse.toString());
-                    Log.d("okok", "Response Code : " + loginResponse.getData().getPhoneNumber());
-                    Log.d("okok", "Response Code : " + loginResponse.getData().getFirstName());
-                    Log.d("okok", "Response Code : " + loginResponse.getData().getAddress());
-                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    case R.id.menu_logout:
+                        Log.d("okok", "under menu Logout");
 
-                } else {
-                    Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
+                        builder.setMessage("Do you want to Exit?")
+                                .setTitle("Logout")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                        startActivity(intent);
+
+                                    }
+                                })
+                                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
                 }
-            }
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Throwable: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+                return true;
             }
         });
 
 
-    }
+//        Toast.makeText(MainActivity.this, "Email:"+loginResponse.getData().getEmail(), Toast.LENGTH_SHORT).show();
 
-    private boolean validate_password() {
 
-        String passwordInput = password.getEditText().getText().toString().trim();
-        if (passwordInput.isEmpty()) {
-            password.setError("Fields can't be empty");
-            return false;
-        } else {
-            password.setError(null);
-            return true;
-        }
+
 
     }
 
-    private boolean validate_email() {
 
-        String emailInput = email.getEditableText().toString().trim();
-        if (emailInput.isEmpty()) {
-            email.setError("Field empty");
-            return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            email.setError("enter a valid email address");
-            return false;
-        } else {
-            email.setError(null);
-            return true;
-        }
-
-    }
 
 }

@@ -3,7 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/layout/activity_drawer.xml" value="0.18" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/layout/activity_main.xml" value="0.14" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/layout/app_bar_drawer.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/layout/content_drawer.xml" value="0.22" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/layout/fragment_gallery.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/layout/fragment_slideshow.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/layout/nav_activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/layout/nav_header_drawer.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/layout/navheader.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/menu/drawer.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/menu/iconmenu.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

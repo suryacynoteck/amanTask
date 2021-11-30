@@ -12,7 +12,10 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface UserService {
+
+
     @POST("User/Login")
     Call<LoginResponse> userLogin(@Body LoginRequest loginparams);
+
 
 }

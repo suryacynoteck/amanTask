@@ -22,8 +22,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
     private static final String API_BASE_URL = "https://petofyapi.azurewebsites.net/api/";
     private static Retrofit retrofitAuthenticated = null;
+
         public static Retrofit getClient ( final Activity activity){
             if (retrofitAuthenticated == null) {
+
                 OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
                 OkHttpClient clientAuthenticated;
                 builder.connectTimeout(30, TimeUnit.SECONDS)
