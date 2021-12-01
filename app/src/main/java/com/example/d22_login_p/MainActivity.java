@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO: why crashing    , cannot access  via obj.
 //        Log.d("okok", "Email received in MainActivity: " + loginResponse.getData().getEmail());
 
+        loadFragment(new HomeFragment());
 
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -74,12 +77,14 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     
                     case R.id.menu_home:
-                        Toast.makeText(getApplicationContext(), "Home Panel is Open", Toast.LENGTH_SHORT).show();
+
+                        loadFragment(new HomeFragment());
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
 
                     case R.id.menu_setting:
-                        Toast.makeText(getApplicationContext(),"setting is Open",Toast.LENGTH_LONG).show();
+
+                        loadFragment(new SettingFragment());
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
 
@@ -126,6 +131,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void loadFragment(Fragment fragment) {
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.mainContainer, fragment);
+        transaction.commit();
+
+    }
 
 
 }

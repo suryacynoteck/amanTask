@@ -26,6 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
+
     private static final String TAG = "MainActivity";
     EditText email;
     TextInputLayout password;
