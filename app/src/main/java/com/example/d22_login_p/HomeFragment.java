@@ -13,17 +13,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.d22_login_p.api_interface.ApiClient;
 import com.example.d22_login_p.api_interface.UserService;
-import com.example.d22_login_p.model.RecReqestParams;
-import com.example.d22_login_p.model.RecRequest;
-import com.example.d22_login_p.model.RecResponse;
-import com.example.d22_login_p.model.Rec_Data_Petlist;
+import com.example.d22_login_p.model.Recycler.RecReqestParams;
+import com.example.d22_login_p.model.Recycler.RecRequest;
+import com.example.d22_login_p.model.Recycler.RecResponse;
+import com.example.d22_login_p.model.Recycler.RecDataPetlist;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -142,7 +140,7 @@ public class HomeFragment extends Fragment {
 
 //                    int size = response.body().getData().getPetlist().size();
 
-                    ArrayList<Rec_Data_Petlist> arrayList= response.body().getData().getPetlist();
+                    ArrayList<RecDataPetlist> arrayList= response.body().getData().getPetlist();
 
                     recyclerView.setAdapter(new myadapter(arrayList));
 

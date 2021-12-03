@@ -1,11 +1,13 @@
 
-        package com.example.d22_login_p.model;
+package com.example.d22_login_p.model;
 
-        import java.util.List;
-        import com.google.gson.annotations.Expose;
-        import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-public class Rec_Data_Petlist {
+import java.util.List;
+
+
+public class PetDetailData {
 
     @SerializedName("id")
     @Expose
@@ -69,13 +71,13 @@ public class Rec_Data_Petlist {
     private Integer petAgeListId;
     @SerializedName("petAgeUnitList")
     @Expose
-    private List<Rec_Data_Petlist> petAgeUnitList = null;
+    private List<PetDetailDataPetAgeUnit> petAgeUnitList = null;
     @SerializedName("description")
     @Expose
     private Object description;
     @SerializedName("createDate")
     @Expose
-    private Object createDate;
+    private String createDate;
     @SerializedName("petProfileImageUrl")
     @Expose
     private Object petProfileImageUrl;
@@ -129,25 +131,25 @@ public class Rec_Data_Petlist {
     private Object microchipNumber;
     @SerializedName("user")
     @Expose
-    private Rec_Data_Petlist_User user;
+    private PetDetailDataUser user;
     @SerializedName("petTypeList")
     @Expose
-    private Object petTypeList;
+    private List<PetDetailDataPetType> petTypeList = null;
     @SerializedName("petSexList")
     @Expose
-    private Object petSexList;
+    private List<PetDetailDataPetSex> petSexList = null;
     @SerializedName("petAgeList")
     @Expose
-    private Object petAgeList;
+    private List<PetDetailDataPetAge> petAgeList = null;
     @SerializedName("petSizeList")
     @Expose
-    private Object petSizeList;
+    private List<PetDetailDataPetSize> petSizeList = null;
     @SerializedName("petColorList")
     @Expose
-    private Object petColorList;
+    private List<PetColor> petColorList = null;
     @SerializedName("petBreedList")
     @Expose
-    private Object petBreedList;
+    private List<PetDetailDataPetBreed> petBreedList = null;
     @SerializedName("cityList")
     @Expose
     private Object cityList;
@@ -156,7 +158,7 @@ public class Rec_Data_Petlist {
     private Object stateList;
     @SerializedName("petType")
     @Expose
-    private String petType;
+    private Object petType;
     @SerializedName("petSex")
     @Expose
     private String petSex;
@@ -210,7 +212,7 @@ public class Rec_Data_Petlist {
     private Boolean isAddedToRegister;
     @SerializedName("barcodeUrl")
     @Expose
-    private Object barcodeUrl;
+    private String barcodeUrl;
     @SerializedName("prefixList")
     @Expose
     private List<String> prefixList = null;
@@ -396,11 +398,11 @@ public class Rec_Data_Petlist {
         this.petAgeListId = petAgeListId;
     }
 
-    public List<Rec_Data_Petlist> getPetAgeUnitList() {
+    public List<PetDetailDataPetAgeUnit> getPetAgeUnitList() {
         return petAgeUnitList;
     }
 
-    public void setPetAgeUnitList(List<Rec_Data_Petlist> petAgeUnitList) {
+    public void setPetAgeUnitList(List<PetDetailDataPetAgeUnit> petAgeUnitList) {
         this.petAgeUnitList = petAgeUnitList;
     }
 
@@ -412,11 +414,11 @@ public class Rec_Data_Petlist {
         this.description = description;
     }
 
-    public Object getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Object createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
@@ -556,59 +558,59 @@ public class Rec_Data_Petlist {
         this.microchipNumber = microchipNumber;
     }
 
-    public Rec_Data_Petlist_User getUser() {
+    public PetDetailDataUser getUser() {
         return user;
     }
 
-    public void setUser(Rec_Data_Petlist_User user) {
+    public void setUser(PetDetailDataUser user) {
         this.user = user;
     }
 
-    public Object getPetTypeList() {
+    public List<PetDetailDataPetType> getPetTypeList() {
         return petTypeList;
     }
 
-    public void setPetTypeList(Object petTypeList) {
+    public void setPetTypeList(List<PetDetailDataPetType> petTypeList) {
         this.petTypeList = petTypeList;
     }
 
-    public Object getPetSexList() {
+    public List<PetDetailDataPetSex> getPetSexList() {
         return petSexList;
     }
 
-    public void setPetSexList(Object petSexList) {
+    public void setPetSexList(List<PetDetailDataPetSex> petSexList) {
         this.petSexList = petSexList;
     }
 
-    public Object getPetAgeList() {
+    public List<PetDetailDataPetAge> getPetAgeList() {
         return petAgeList;
     }
 
-    public void setPetAgeList(Object petAgeList) {
+    public void setPetAgeList(List<PetDetailDataPetAge> petAgeList) {
         this.petAgeList = petAgeList;
     }
 
-    public Object getPetSizeList() {
+    public List<PetDetailDataPetSize> getPetSizeList() {
         return petSizeList;
     }
 
-    public void setPetSizeList(Object petSizeList) {
+    public void setPetSizeList(List<PetDetailDataPetSize> petSizeList) {
         this.petSizeList = petSizeList;
     }
 
-    public Object getPetColorList() {
+    public List<PetColor> getPetColorList() {
         return petColorList;
     }
 
-    public void setPetColorList(Object petColorList) {
+    public void setPetColorList(List<PetColor> petColorList) {
         this.petColorList = petColorList;
     }
 
-    public Object getPetBreedList() {
+    public List<PetDetailDataPetBreed> getPetBreedList() {
         return petBreedList;
     }
 
-    public void setPetBreedList(Object petBreedList) {
+    public void setPetBreedList(List<PetDetailDataPetBreed> petBreedList) {
         this.petBreedList = petBreedList;
     }
 
@@ -628,11 +630,11 @@ public class Rec_Data_Petlist {
         this.stateList = stateList;
     }
 
-    public String getPetType() {
+    public Object getPetType() {
         return petType;
     }
 
-    public void setPetType(String petType) {
+    public void setPetType(Object petType) {
         this.petType = petType;
     }
 
@@ -772,11 +774,11 @@ public class Rec_Data_Petlist {
         this.isAddedToRegister = isAddedToRegister;
     }
 
-    public Object getBarcodeUrl() {
+    public String getBarcodeUrl() {
         return barcodeUrl;
     }
 
-    public void setBarcodeUrl(Object barcodeUrl) {
+    public void setBarcodeUrl(String barcodeUrl) {
         this.barcodeUrl = barcodeUrl;
     }
 
@@ -845,5 +847,4 @@ public class Rec_Data_Petlist {
     }
 
 }
-
 
