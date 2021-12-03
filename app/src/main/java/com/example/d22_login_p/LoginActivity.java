@@ -3,6 +3,7 @@ package com.example.d22_login_p;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -44,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         apiInterface = ApiClient.getClient(this).create(UserService.class);
+
+
         email = findViewById(R.id.edit_txt_email);
         password = findViewById(R.id.edit_txt_pass);
         pass_edt = findViewById(R.id.pass_edt);
@@ -92,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "this is forgot password", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
 
@@ -108,11 +112,21 @@ public class LoginActivity extends AppCompatActivity {
 
                     LoginResponse loginResponse = response.body();
 
-                    Log.d(TAG, "onResponse: "+loginResponse.toString());
+                    Log.d("okok", "onResponse: "+loginResponse.toString());
+                    Log.d("okok", "onResponse: "+loginResponse.getResponse().getResponseCode());
                     Log.d("okok", "Response Code : " + loginResponse.getData().getPhoneNumber());
 
                     Log.d("okok", "Response Code : " + loginResponse.getData().getFirstName());
                     Log.d("okok", "Email : " + loginResponse.getData().getEmail());
+                    Log.d("okok", "token: " + loginResponse.getResponse().getToken());
+
+                    String token = loginResponse.getResponse().getToken().toString();
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("token", token);
+                    editor.apply();
+
 
                     progressBar.setVisibility(View.GONE);
 

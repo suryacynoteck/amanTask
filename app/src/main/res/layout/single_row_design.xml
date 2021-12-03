@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="15dp"
     android:elevation="4dp"
+
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,16 +15,20 @@
         android:layout_height="match_parent"
 
         android:paddingStart="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp">
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+
+
+      >
 
 
         <ImageView
             android:id="@+id/imgDOG"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />

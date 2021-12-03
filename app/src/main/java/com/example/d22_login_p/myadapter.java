@@ -1,5 +1,6 @@
 package com.example.d22_login_p;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,36 +11,52 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.d22_login_p.model.RecResponse;
+import com.example.d22_login_p.model.Rec_Data_Petlist;
 
 import java.util.ArrayList;
 
 public class myadapter extends RecyclerView.Adapter<myadapter.myViewHolder> {
 
-    ArrayList<RecResponse> dataholder;
+    private ArrayList<Rec_Data_Petlist> dataholder;
 
-    public myadapter(ArrayList<RecResponse> dataholder) {
+    public myadapter(ArrayList<Rec_Data_Petlist> dataholder) {
         this.dataholder = dataholder;
     }
+
 
     @NonNull
     @Override
     public myadapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_row_design, parent, false);
         return new myViewHolder(view);
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull myadapter.myViewHolder holder, int position) {
+        Log.d("okok2", "under onBind");
 
-        holder.dogName.setText(dataholder.get(position).getDogName());
-        holder.dogDOB.setText(dataholder.get(position).getDogDOB());
-        holder.doctorName.setText(dataholder.get(position).getDoctorName());
+        Log.d("okok2", "petName: "+position+" "+dataholder.get(position).getPetName());
 
-        holder.img.setImageResource(dataholder.get(position).getImage());
 
+        holder.dogName.setText(dataholder.get(position).getPetName());
+        holder.dogDOB.setText(dataholder.get(position).getDateOfBirth());
+        holder.doctorName.setText(dataholder.get(position).getPetParentName());
+
+        holder.img.setImageResource(R.drawable.dogimg);
+
+/*
+
+Glide.with(this)
+        .load("url here") // image url
+        .placeholder(R.drawable.placeholder) // any placeholder to load at start
+        .error(R.drawable.imagenotfound)  // any image in case of error
+        .override(200, 200) // resizing
+        .centerCrop()
+        .into(imageView);  // imageview object
+
+
+**/
 
 
     }

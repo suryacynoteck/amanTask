@@ -20,10 +20,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
+
+    // TODO:  baseUrl2 = "https://petofyapi.azurewebsites.net/api/report/"
+    // could be,, send parameter 1,2  via  getClient >> then  if 2 , use baseUrl2  for building Retrofit instance
+
     private static final String API_BASE_URL = "https://petofyapi.azurewebsites.net/api/";
+
     private static Retrofit retrofitAuthenticated = null;
 
         public static Retrofit getClient ( final Activity activity){
+
+
             if (retrofitAuthenticated == null) {
 
                 OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
@@ -33,7 +40,7 @@ public class ApiClient {
                         .writeTimeout(30, TimeUnit.SECONDS)
                         .interceptors().add(new Interceptor() {
                     @Override
-                    public okhttp3.Response intercept(@NonNull Chain chain) throws IOException {
+                    public okhttp3.Response intercept(@NonNull Chain chain) throws IOException {  // no usage in this project
 
                         Request originalRequest = chain.request();
                         Request.Builder builder = originalRequest
@@ -44,14 +51,16 @@ public class ApiClient {
                     }
                 });
 
-                clientAuthenticated = builder.build();
-                retrofitAuthenticated = new Retrofit.Builder()
-                        .client(clientAuthenticated)
-                        .baseUrl(API_BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
+                    clientAuthenticated = builder.build();
+                    retrofitAuthenticated = new Retrofit.Builder()
+                            .client(clientAuthenticated)
+                            .baseUrl(API_BASE_URL)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
             }
             return retrofitAuthenticated;
+
         }
 
     }

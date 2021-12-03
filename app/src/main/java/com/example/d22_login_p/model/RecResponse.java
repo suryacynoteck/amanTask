@@ -1,59 +1,44 @@
 package com.example.d22_login_p.model;
 
-import android.widget.ImageView;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class RecResponse {
 
-// TODO: make it wrt the postman  ,,  Response,,   innerClass
-    private int image;
-    private String dogName;
-    private String dogDOB;
-    private String doctorName;
 
-    public RecResponse(int image, String dogName, String dogDOB, String doctorName) {
-        this.image = image;
-        this.dogName = dogName;
-        this.dogDOB = dogDOB;
-        this.doctorName = doctorName;
+    @SerializedName("header")
+    @Expose
+    private Rec_Header header;
+
+    @SerializedName("data")
+    @Expose
+    private Rec_Data data;
+
+    @SerializedName("response")
+    @Expose
+    private Rec_Response response;
+
+    public Rec_Header getHeader() {
+        return header;
     }
 
-    //TODO:  only for testing ,, string dogName
-    public RecResponse(String dogName) {
-        this.dogName = dogName;
+    public void setHeader(Rec_Header header) {
+        this.header = header;
     }
 
-
-
-    public int getImage() {
-        return image;
+    public Rec_Data getData() {
+        return data;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setData(Rec_Data data) {
+        this.data = data;
     }
 
-    public String getDogName() {
-        return dogName;
+    public Rec_Response getResponse() {
+        return response;
     }
 
-    public void setDogName(String dogName) {
-        this.dogName = dogName;
+    public void setResponse(Rec_Response response) {
+        this.response = response;
     }
-
-    public String getDogDOB() {
-        return dogDOB;
-    }
-
-    public void setDogDOB(String dogDOB) {
-        this.dogDOB = dogDOB;
-    }
-
-    public String getDoctorName() {
-        return doctorName;
-    }
-
-    public void setDoctorName(String doctorName) {
-        this.doctorName = doctorName;
-    }
-
 }

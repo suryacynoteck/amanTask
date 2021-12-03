@@ -1,18 +1,33 @@
 package com.example.d22_login_p;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.d22_login_p.api_interface.ApiClient;
+import com.example.d22_login_p.api_interface.UserService;
+import com.example.d22_login_p.model.RecReqestParams;
+import com.example.d22_login_p.model.RecRequest;
 import com.example.d22_login_p.model.RecResponse;
+import com.example.d22_login_p.model.Rec_Data_Petlist;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +46,15 @@ public class HomeFragment extends Fragment {
     private String mParam2;
 
     RecyclerView recyclerView;
-    private ArrayList<RecResponse> dataholder;
+
+    private UserService apiInterface2;
+
+    //TODO:  take via Login call<>
+//    String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjVkMGJkNmQ0LTIzNjQtNGU1Ny04Yzk1LTA3MzZlYTgwMDIyMSIsIm5iZiI6MTYzODI2NjkyOCwiZXhwIjoxNjY5ODAyOTI4LCJpYXQiOjE2MzgyNjY5Mjh9.4tRNX0vlPDEpR0kLG43JbtJ10-AZmONtpIIoXMk0Ksg";
+
+
+
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -67,25 +90,79 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("okok", "under ONcreate");
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView_response);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        dataholder = new ArrayList<>();
-
-        RecResponse obj1 = new RecResponse(R.drawable.angular,"jacks","23/01/2009","Dr Tripati");
-
-        for (int i = 0; i < 20; i++) {
-            dataholder.add(obj1);
-        }
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
 
-
-        recyclerView.setAdapter(new myadapter(dataholder));
+        getApidata();
 
 
         return view;
+    }
+
+    private void getApidata() {
+        Log.d("okok", "under getApidata");
+
+
+
+
+        apiInterface2 = ApiClient.getClient(getActivity()).create(UserService.class);
+
+
+        RecReqestParams recReqestParams = new RecReqestParams(1, 20);       // setting the static fields , to be send in Call<> in get_petData()
+        RecRequest recRequest = new RecRequest(recReqestParams);
+
+        Log.d("okok", "created obj, recRequest");
+
+        //        getActivity().getShared...   Vs      getContext.getShared...
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("token", Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "this is string token");
+        Log.d("okok", "HomeFragment token: " + token);
+
+        Call<RecResponse> recResponseCall = apiInterface2.get_petData(recRequest, token);
+        Log.d("okok", "1");
+
+        recResponseCall.enqueue(new Callback<RecResponse>() {
+            @Override
+            public void onResponse(Call<RecResponse> call, Response<RecResponse> response) {
+                Log.d("okok", "2");
+
+                if (response.isSuccessful()) {
+                    Log.d("okok", "response successful");
+
+                    Log.d("okok", "Response " + response.body().toString());
+                    Log.d("okok", "petname " + response.body().getData().getPetlist().get(0).getPetName());
+                    Log.d("okok", "id " + response.body().getData().getPetlist().get(1).getId());
+                    Log.d("okok", "one " + response.body().getData().getPetlist().get(1).getPetName());
+
+//                    int size = response.body().getData().getPetlist().size();
+
+                    ArrayList<Rec_Data_Petlist> arrayList= response.body().getData().getPetlist();
+
+                    recyclerView.setAdapter(new myadapter(arrayList));
+
+                } else {
+                    Log.d("okok", "response unsucessful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RecResponse> call, Throwable t) {
+
+            }
+        });
+
+
+
+        Log.d("okok", "3");
+
+
+
+
     }
 }
