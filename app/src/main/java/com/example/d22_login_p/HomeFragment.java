@@ -13,17 +13,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.example.d22_login_p.adapter.myadapter;
 import com.example.d22_login_p.api_interface.ApiClient;
 import com.example.d22_login_p.api_interface.UserService;
 import com.example.d22_login_p.model.RecReqestParams;
 import com.example.d22_login_p.model.RecRequest;
 import com.example.d22_login_p.model.RecResponse;
-import com.example.d22_login_p.model.Rec_Data_Petlist;
+import com.example.d22_login_p.model.pet.PetListData;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,9 +50,6 @@ public class HomeFragment extends Fragment {
 
     //TODO:  take via Login call<>
 //    String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjVkMGJkNmQ0LTIzNjQtNGU1Ny04Yzk1LTA3MzZlYTgwMDIyMSIsIm5iZiI6MTYzODI2NjkyOCwiZXhwIjoxNjY5ODAyOTI4LCJpYXQiOjE2MzgyNjY5Mjh9.4tRNX0vlPDEpR0kLG43JbtJ10-AZmONtpIIoXMk0Ksg";
-
-
-
 
 
     public HomeFragment() {
@@ -108,17 +104,11 @@ public class HomeFragment extends Fragment {
     private void getApidata() {
         Log.d("okok", "under getApidata");
 
-
-
-
         apiInterface2 = ApiClient.getClient(getActivity()).create(UserService.class);
-
 
         RecReqestParams recReqestParams = new RecReqestParams(1, 20);       // setting the static fields , to be send in Call<> in get_petData()
         RecRequest recRequest = new RecRequest(recReqestParams);
-
         Log.d("okok", "created obj, recRequest");
-
         //        getActivity().getShared...   Vs      getContext.getShared...
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("token", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "this is string token");
@@ -134,7 +124,6 @@ public class HomeFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     Log.d("okok", "response successful");
-
                     Log.d("okok", "Response " + response.body().toString());
                     Log.d("okok", "petname " + response.body().getData().getPetlist().get(0).getPetName());
                     Log.d("okok", "id " + response.body().getData().getPetlist().get(1).getId());
@@ -142,7 +131,7 @@ public class HomeFragment extends Fragment {
 
 //                    int size = response.body().getData().getPetlist().size();
 
-                    ArrayList<Rec_Data_Petlist> arrayList= response.body().getData().getPetlist();
+                    ArrayList<PetListData> arrayList = response.body().getData().getPetlist();
 
                     recyclerView.setAdapter(new myadapter(arrayList));
 
@@ -158,10 +147,7 @@ public class HomeFragment extends Fragment {
         });
 
 
-
         Log.d("okok", "3");
-
-
 
 
     }

@@ -1,34 +1,35 @@
 package com.example.d22_login_p.model;
 
+import com.example.d22_login_p.model.pet.PetListData;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class Rec_Data {
+public class RecyclerData {
 
     @SerializedName("petList")
     @Expose
-    private ArrayList<Rec_Data_Petlist> petlist;
+    private ArrayList<PetListData> petlist;
 
     @SerializedName("pagingHeader")
     @Expose
-    private Rec_Data_PagingHeader pagingHeader;
+    private PagingHeader pagingHeader;
 
 
-    public ArrayList<Rec_Data_Petlist> getPetlist() {
+    public ArrayList<PetListData> getPetlist() {
         return petlist;
     }
 
-    public void setPetlist(ArrayList<Rec_Data_Petlist> petlist) {
+    public void setPetlist(ArrayList<PetListData> petlist) {
         this.petlist = petlist;
     }
 
-    public Rec_Data_PagingHeader getPagingHeader() {
+    public PagingHeader getPagingHeader() {
         return pagingHeader;
     }
 
-    public void setPagingHeader(Rec_Data_PagingHeader pagingHeader) {
+    public void setPagingHeader(PagingHeader pagingHeader) {
         this.pagingHeader = pagingHeader;
     }
 

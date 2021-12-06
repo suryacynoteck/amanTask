@@ -1,5 +1,6 @@
-package com.example.d22_login_p.model;
+package com.example.d22_login_p.model.login;
 
+import com.example.d22_login_p.model.login.LoginParams;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

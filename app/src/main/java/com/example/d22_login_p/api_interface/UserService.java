@@ -1,11 +1,9 @@
 package com.example.d22_login_p.api_interface;
 
-import com.example.d22_login_p.model.LoginRequest;
-import com.example.d22_login_p.model.LoginResponse;
-import com.example.d22_login_p.model.PetDetail;
+import com.example.d22_login_p.model.login.LoginRequest;
+import com.example.d22_login_p.model.login.LoginResponse;
 import com.example.d22_login_p.model.RecRequest;
 import com.example.d22_login_p.model.RecResponse;
-import com.example.d22_login_p.model.SetPetid;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -26,8 +24,8 @@ public interface UserService {
 //    Call<List<RecResponse>> get_petData(@Body RecRequest recRequest,@Header("Authorization") String token );      // todo:  what iff ,, asked List<RecResponse>
 
 
-    @POST("pet/GetPetDetail")
-    Call<PetDetail> getpetDetail(@Body SetPetid setPetid, @Header("Authorization") String token);
+  /*  @POST("pet/GetPetDetail")
+    Call<PetDetail> getpetDetail(@Body SetPetid setPetid, @Header("Authorization") String token);*/
 
 
     /*

@@ -1,11 +1,11 @@
-package com.example.d22_login_p.model;
+package com.example.d22_login_p.model.pet;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Rec_Data_Petlist_User {
+public class PetListUserData {
 
     @SerializedName("encryptedId")
     @Expose

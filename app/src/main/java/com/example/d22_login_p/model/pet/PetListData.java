@@ -1,11 +1,11 @@
 
-        package com.example.d22_login_p.model;
+package com.example.d22_login_p.model.pet;
+import java.util.List;
 
-        import java.util.List;
-        import com.google.gson.annotations.Expose;
-        import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-public class Rec_Data_Petlist {
+public class PetListData {
 
     @SerializedName("id")
     @Expose
@@ -69,7 +69,7 @@ public class Rec_Data_Petlist {
     private Integer petAgeListId;
     @SerializedName("petAgeUnitList")
     @Expose
-    private List<Rec_Data_Petlist> petAgeUnitList = null;
+    private List<PetListData> petAgeUnitList = null;
     @SerializedName("description")
     @Expose
     private Object description;
@@ -129,7 +129,7 @@ public class Rec_Data_Petlist {
     private Object microchipNumber;
     @SerializedName("user")
     @Expose
-    private Rec_Data_Petlist_User user;
+    private PetListUserData user;
     @SerializedName("petTypeList")
     @Expose
     private Object petTypeList;
@@ -396,11 +396,11 @@ public class Rec_Data_Petlist {
         this.petAgeListId = petAgeListId;
     }
 
-    public List<Rec_Data_Petlist> getPetAgeUnitList() {
+    public List<PetListData> getPetAgeUnitList() {
         return petAgeUnitList;
     }
 
-    public void setPetAgeUnitList(List<Rec_Data_Petlist> petAgeUnitList) {
+    public void setPetAgeUnitList(List<PetListData> petAgeUnitList) {
         this.petAgeUnitList = petAgeUnitList;
     }
 
@@ -556,11 +556,11 @@ public class Rec_Data_Petlist {
         this.microchipNumber = microchipNumber;
     }
 
-    public Rec_Data_Petlist_User getUser() {
+    public PetListUserData getUser() {
         return user;
     }
 
-    public void setUser(Rec_Data_Petlist_User user) {
+    public void setUser(PetListUserData user) {
         this.user = user;
     }
 

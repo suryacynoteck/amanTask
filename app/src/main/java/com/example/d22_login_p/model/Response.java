@@ -3,9 +3,7 @@ package com.example.d22_login_p.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Rec_Response {
-
-
+public class Response {
     @SerializedName("responseCode")
     @Expose
     private Integer responseCode;

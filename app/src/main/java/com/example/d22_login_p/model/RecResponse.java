@@ -8,37 +8,37 @@ public class RecResponse {
 
     @SerializedName("header")
     @Expose
-    private Rec_Header header;
+    private ResponseHeader header;
 
     @SerializedName("data")
     @Expose
-    private Rec_Data data;
+    private RecyclerData data;
 
     @SerializedName("response")
     @Expose
-    private Rec_Response response;
+    private Response response;
 
-    public Rec_Header getHeader() {
+    public ResponseHeader getHeader() {
         return header;
     }
 
-    public void setHeader(Rec_Header header) {
+    public void setHeader(ResponseHeader header) {
         this.header = header;
     }
 
-    public Rec_Data getData() {
+    public RecyclerData getData() {
         return data;
     }
 
-    public void setData(Rec_Data data) {
+    public void setData(RecyclerData data) {
         this.data = data;
     }
 
-    public Rec_Response getResponse() {
+    public Response getResponse() {
         return response;
     }
 
-    public void setResponse(Rec_Response response) {
+    public void setResponse(Response response) {
         this.response = response;
     }
 }

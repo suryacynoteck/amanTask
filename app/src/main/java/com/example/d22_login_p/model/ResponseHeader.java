@@ -3,7 +3,7 @@ package com.example.d22_login_p.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Rec_Header {
+public class ResponseHeader {
 
 
     @SerializedName("deviceId")

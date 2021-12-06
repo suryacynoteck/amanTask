@@ -1,4 +1,4 @@
-package com.example.d22_login_p;
+package com.example.d22_login_p.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,16 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.d22_login_p.model.RecResponse;
-import com.example.d22_login_p.model.Rec_Data_Petlist;
+import com.example.d22_login_p.R;
+import com.example.d22_login_p.model.pet.PetListData;
 
 import java.util.ArrayList;
 
 public class myadapter extends RecyclerView.Adapter<myadapter.myViewHolder> {
 
-    private ArrayList<Rec_Data_Petlist> dataholder;
+    private ArrayList<PetListData> dataholder;
 
-    public myadapter(ArrayList<Rec_Data_Petlist> dataholder) {
+    public myadapter(ArrayList<PetListData> dataholder) {
         this.dataholder = dataholder;
     }
 

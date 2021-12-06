@@ -16,9 +16,9 @@ import android.widget.Toast;
 
 import com.example.d22_login_p.api_interface.ApiClient;
 import com.example.d22_login_p.api_interface.UserService;
-import com.example.d22_login_p.model.LoginParams;
-import com.example.d22_login_p.model.LoginRequest;
-import com.example.d22_login_p.model.LoginResponse;
+import com.example.d22_login_p.model.login.LoginParams;
+import com.example.d22_login_p.model.login.LoginRequest;
+import com.example.d22_login_p.model.login.LoginResponse;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
