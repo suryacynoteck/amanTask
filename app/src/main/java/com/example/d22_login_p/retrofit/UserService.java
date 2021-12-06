@@ -1,4 +1,4 @@
-package com.example.d22_login_p.api_interface;
+package com.example.d22_login_p.retrofit;
 
 import com.example.d22_login_p.model.login.LoginRequest;
 import com.example.d22_login_p.model.login.LoginResponse;

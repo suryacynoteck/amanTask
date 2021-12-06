@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.d22_login_p.adapter.myadapter;
-import com.example.d22_login_p.api_interface.ApiClient;
-import com.example.d22_login_p.api_interface.UserService;
+import com.example.d22_login_p.retrofit.ApiClient;
+import com.example.d22_login_p.retrofit.UserService;
 import com.example.d22_login_p.model.RecReqestParams;
 import com.example.d22_login_p.model.RecRequest;
 import com.example.d22_login_p.model.RecResponse;
