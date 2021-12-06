@@ -1,10 +1,10 @@
 package com.example.d22_login_p.api_interface;
 
-import com.example.d22_login_p.model.LoginRequest;
-import com.example.d22_login_p.model.LoginResponse;
+import com.example.d22_login_p.model.Login.LoginRequest;
+import com.example.d22_login_p.model.Login.LoginResponse;
 import com.example.d22_login_p.model.PetDetail;
-import com.example.d22_login_p.model.RecRequest;
-import com.example.d22_login_p.model.RecResponse;
+import com.example.d22_login_p.model.Recycler.RecRequest;
+import com.example.d22_login_p.model.Recycler.RecResponse;
 import com.example.d22_login_p.model.SetPetid;
 
 import retrofit2.Call;

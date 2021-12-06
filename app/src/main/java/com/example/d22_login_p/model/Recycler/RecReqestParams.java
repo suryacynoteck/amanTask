@@ -1,4 +1,4 @@
-package com.example.d22_login_p.model;
+package com.example.d22_login_p.model.Recycler;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

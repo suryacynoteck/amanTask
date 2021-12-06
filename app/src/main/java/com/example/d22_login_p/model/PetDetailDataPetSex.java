@@ -3,7 +3,7 @@ package com.example.d22_login_p.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Rec_Data_Petlist_PetAgeUnit {
+public class PetDetailDataPetSex {
 
     @SerializedName("disabled")
     @Expose

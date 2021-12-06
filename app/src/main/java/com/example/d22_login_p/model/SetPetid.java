@@ -7,13 +7,13 @@ public class SetPetid {
 
     @SerializedName("data")
     @Expose
-    private SetPetid_petData petData;
+    private SetPetidpetData petData;
 
-    public SetPetid_petData getPetData() {
+    public SetPetidpetData getPetData() {
         return petData;
     }
 
-    public void setPetData(SetPetid_petData petData) {
+    public void setPetData(SetPetidpetData petData) {
         this.petData = petData;
     }
 }

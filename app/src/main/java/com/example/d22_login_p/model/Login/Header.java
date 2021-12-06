@@ -1,10 +1,9 @@
-package com.example.d22_login_p.model;
+package com.example.d22_login_p.model.Login;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Rec_Header {
-
+public class Header {
 
     @SerializedName("deviceId")
     @Expose
@@ -18,7 +17,6 @@ public class Rec_Header {
     @SerializedName("token")
     @Expose
     private String token;
-
 
     public Object getDeviceId() {
         return deviceId;
@@ -51,4 +49,5 @@ public class Rec_Header {
     public void setToken(String token) {
         this.token = token;
     }
+
 }

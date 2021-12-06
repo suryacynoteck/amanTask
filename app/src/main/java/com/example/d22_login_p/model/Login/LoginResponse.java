@@ -1,13 +1,11 @@
-package com.example.d22_login_p.model;
+package com.example.d22_login_p.model.Login;
 
-import com.example.d22_login_p.model.Login.Header;
-import com.example.d22_login_p.model.Login.Response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PetDetail {
 
-    //  model class  wrt  POSTMAN response
+public class LoginResponse {
+
     @SerializedName("header")
     @Expose
     private Header header;
@@ -16,9 +14,10 @@ public class PetDetail {
     @Expose
     private Response response;
 
+
     @SerializedName("data")
     @Expose
-    private PetDetailData data;
+    private LoginResponseData data;
 
 
     public Header getHeader() {
@@ -29,6 +28,14 @@ public class PetDetail {
         this.header = header;
     }
 
+    public LoginResponseData getData() {
+        return data;
+    }
+
+    public void setData(LoginResponseData data) {
+        this.data = data;
+    }
+
     public Response getResponse() {
         return response;
     }
@@ -37,11 +44,13 @@ public class PetDetail {
         this.response = response;
     }
 
-    public PetDetailData getData() {
-        return data;
-    }
 
-    public void setData(PetDetailData data) {
-        this.data = data;
+    @Override
+    public String toString() {
+        return "LoginResponse{" +
+                "header=" + header +
+                ", data=" + data +
+                ", response=" + response +
+                '}';
     }
 }

@@ -30,7 +30,6 @@ public class ApiClient {
 
         public static Retrofit getClient ( final Activity activity){
 
-
             if (retrofitAuthenticated == null) {
 
                 OkHttpClient.Builder builder = new OkHttpClient().newBuilder();

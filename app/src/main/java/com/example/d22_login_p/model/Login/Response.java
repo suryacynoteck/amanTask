@@ -1,10 +1,9 @@
-package com.example.d22_login_p.model;
+package com.example.d22_login_p.model.Login;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Rec_Response {
-
+public class Response {
 
     @SerializedName("responseCode")
     @Expose
@@ -21,7 +20,6 @@ public class Rec_Response {
     @SerializedName("redirectUrl")
     @Expose
     private String redirectUrl;
-
 
     public Integer getResponseCode() {
         return responseCode;
@@ -62,4 +60,17 @@ public class Rec_Response {
     public void setRedirectUrl(String redirectUrl) {
         this.redirectUrl = redirectUrl;
     }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "responseCode=" + responseCode +
+                ", responseMessage='" + responseMessage + '\'' +
+                ", token='" + token + '\'' +
+                ", value=" + value +
+                ", redirectUrl='" + redirectUrl + '\'' +
+                '}';
+    }
+
+
 }
