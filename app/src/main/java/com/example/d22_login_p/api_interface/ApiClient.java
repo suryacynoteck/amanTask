@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    // TODO:  baseUrl2 = "https://petofyapi.azurewebsites.net/api/report/"
+
     // could be,, send parameter 1,2  via  getClient >> then  if 2 , use baseUrl2  for building Retrofit instance
 
     private static final String API_BASE_URL = "https://petofyapi.azurewebsites.net/api/";

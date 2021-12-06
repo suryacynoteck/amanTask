@@ -23,7 +23,7 @@ public interface UserService {
 
     @POST("report/GetPetList")
     Call<RecResponse> get_petData(@Body RecRequest recRequest, @Header("Authorization") String token);
-//    Call<List<RecResponse>> get_petData(@Body RecRequest recRequest,@Header("Authorization") String token );      // todo:  what iff ,, asked List<RecResponse>
+//    Call<List<RecResponse>> get_petData(@Body RecRequest recRequest,@Header("Authorization") String token );
 
 
     @POST("pet/GetPetDetail")

@@ -31,12 +31,12 @@ import retrofit2.Response;
  */
 public class PetCardFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
+    //  Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+    //Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private UserService apiInterface3;
@@ -56,7 +56,7 @@ public class PetCardFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment PetCardFragment.
      */
-    // TODO: Rename and change types and number of parameters
+    //  Rename and change types and number of parameters
     public static PetCardFragment newInstance(String param1, String param2) {
         PetCardFragment fragment = new PetCardFragment();
         Bundle args = new Bundle();
@@ -86,18 +86,23 @@ public class PetCardFragment extends Fragment {
         petParentname = view.findViewById(R.id.petcard_petParentname);
         petBreedname = view.findViewById(R.id.petcard_breed);
 
-
+/*
         Bundle bundle = this.getArguments();
-        int myInt = 0;
-        if (bundle != null) {
-             myInt = bundle.getInt("id", 9269);
-        }
+//        int myInt = 9269;
+//        if (bundle != null) {
+//             myInt = bundle.getInt("id", 9269);
+//        }
+        Log.d("okok", "after bundle obj");
+
+        int  myInt = bundle.getInt("id", 9269);
+        Log.d("okok", "id value: " + myInt);
+*/
 
 
         apiInterface3 = ApiClient.getClient(getActivity()).create(UserService.class);
 
-        SetPetidpetData id = new SetPetidpetData();     // TODO:  make fetch the id,,, from homefragment.java
-        id.setId(myInt);
+        SetPetidpetData id = new SetPetidpetData();
+        id.setId(9269);                          // TODO:  make id pass dynamically
         SetPetid setPetid = new SetPetid();
         setPetid.setPetData(id);
 
@@ -110,8 +115,8 @@ public class PetCardFragment extends Fragment {
             @Override
             public void onResponse(Call<PetDetail> call, Response<PetDetail> response) {
 
-                if (response.isSuccessful()) {
 
+                if (response.isSuccessful()) {
                     Log.d("okok", "response code: " + response.body().getData().getPetName());
 
                     PetDetailData petDetailData = response.body().getData();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.d22_login_p.api_interface.ApiClient;
+import com.example.d22_login_p.api_interface.OnButtonListener;
 import com.example.d22_login_p.api_interface.UserService;
 import com.example.d22_login_p.model.Recycler.RecReqestParams;
 import com.example.d22_login_p.model.Recycler.RecRequest;
@@ -32,14 +34,14 @@ import retrofit2.Response;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements OnButtonListener {
 
-    // TODO: Rename parameter arguments, choose names that match
+    //  Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+    // Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -47,9 +49,16 @@ public class HomeFragment extends Fragment {
 
     private UserService apiInterface2;
 
-    //TODO:  take via Login call<>
-//    String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjVkMGJkNmQ0LTIzNjQtNGU1Ny04Yzk1LTA3MzZlYTgwMDIyMSIsIm5iZiI6MTYzODI2NjkyOCwiZXhwIjoxNjY5ODAyOTI4LCJpYXQiOjE2MzgyNjY5Mjh9.4tRNX0vlPDEpR0kLG43JbtJ10-AZmONtpIIoXMk0Ksg";
+    OnButtonListener thiscontext;
 
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        thiscontext = (OnButtonListener) context;
+    }
 
 
 
@@ -66,7 +75,7 @@ public class HomeFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment HomeFragment.
      */
-    // TODO: Rename and change types and number of parameters
+    // Rename and change types and number of parameters
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -75,6 +84,8 @@ public class HomeFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,6 +99,9 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+//        thiscontext = (OnButtonListener) container.getContext();        //TODO: 1
+
         Log.d("okok", "under ONcreate");
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -115,7 +129,6 @@ public class HomeFragment extends Fragment {
         RecReqestParams recReqestParams = new RecReqestParams(1, 20);       // setting the static fields , to be send in Call<> in get_petData()
         RecRequest recRequest = new RecRequest(recReqestParams);
 
-        Log.d("okok", "created obj, recRequest");
 
         //        getActivity().getShared...   Vs      getContext.getShared...
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("token", Context.MODE_PRIVATE);
@@ -134,15 +147,19 @@ public class HomeFragment extends Fragment {
                     Log.d("okok", "response successful");
 
                     Log.d("okok", "Response " + response.body().toString());
-                    Log.d("okok", "petname " + response.body().getData().getPetlist().get(0).getPetName());
+                    Log.d("okok", "id " + response.body().getData().getPetlist().get(0).getId());
+                    Log.d("okok", "petname0 " + response.body().getData().getPetlist().get(0).getPetName());
+
                     Log.d("okok", "id " + response.body().getData().getPetlist().get(1).getId());
-                    Log.d("okok", "one " + response.body().getData().getPetlist().get(1).getPetName());
+                    Log.d("okok", "petname1 " + response.body().getData().getPetlist().get(1).getPetName());
 
 //                    int size = response.body().getData().getPetlist().size();
 
                     ArrayList<RecDataPetlist> arrayList= response.body().getData().getPetlist();
 
-                    recyclerView.setAdapter(new myadapter(arrayList));
+
+                    recyclerView.setAdapter(new myadapter(arrayList,thiscontext));        // TODO: if working fine
+                    // why passing context >>  referring to the interface
 
                 } else {
                     Log.d("okok", "response unsucessful");
@@ -163,4 +180,10 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+    @Override
+    public void onButtonclick(int position) {   // THIS WILL  get triggered by --> viweHolder's onClick
+        Log.d("okok", "onButtonclick position: " + position);
+    }
+
 }
