@@ -1,4 +1,4 @@
-package com.example.d22_login_p.model;
+package com.example.d22_login_p.model.pet;
 
 import com.example.d22_login_p.model.Login.Header;
 import com.example.d22_login_p.model.Login.Response;

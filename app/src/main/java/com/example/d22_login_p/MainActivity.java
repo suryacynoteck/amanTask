@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.d22_login_p.model.Login.LoginResponse;
+import com.example.d22_login_p.model.login.LoginResponse;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         TextView txt_subhead = head.findViewById(R.id.txt_subHead);
         txt_subhead.setText(subhead_txt);
 
-
+        //TODO: why crashing    , cannot access  via obj.
 //        Log.d("okok", "Email received in MainActivity: " + loginResponse.getData().getEmail());
 
         loadFragment(new HomeFragment());
