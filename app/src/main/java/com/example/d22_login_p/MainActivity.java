@@ -129,10 +129,11 @@ public class MainActivity extends AppCompatActivity {
     private void loadFragment(Fragment fragment) {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.mainContainer, fragment);
+        transaction.replace(R.id.mainContainer, fragment);
+        transaction.addToBackStack(null);
 
-        transaction.add(R.id.mainContainer, fragment,"backStack");                  //TODO: Fragment backstack1
-        transaction.addToBackStack("back");
+//        transaction.add(R.id.mainContainer, fragment,"backStack");                  //TODO: Fragment backstack1
+//        transaction.addToBackStack("back");
 
         transaction.commit();
 

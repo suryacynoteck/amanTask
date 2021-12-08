@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -56,9 +57,14 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
     private ArrayList<RecDataPetlist> arrayList;
 
     private ProgressBar progressBar;
+    private Context context;
 
 
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 
     public HomeFragment() {
         // Required empty public constructor
@@ -166,7 +172,7 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(new myadapter(arrayList,this));                 // TODO: why, we cannot pass this,   inside  onResponse
+        recyclerView.setAdapter(new myadapter(arrayList,this,context));                 // TODO: why, we cannot pass this,   inside  onResponse
 
     }
 
@@ -185,11 +191,11 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.mainContainer, petCardFragment);
-//        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.mainContainer, petCardFragment);
+        fragmentTransaction.addToBackStack(null);
 
-        fragmentTransaction.add(R.id.mainContainer, petCardFragment);               //TODO: Fragment backstack2
-        fragmentTransaction.addToBackStack("back");
+//        fragmentTransaction.add(R.id.mainContainer, petCardFragment);               //TODO: Fragment backstack2
+//        fragmentTransaction.addToBackStack("back");
 
         fragmentTransaction.commit();
 
