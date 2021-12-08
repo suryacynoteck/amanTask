@@ -16,8 +16,10 @@
 
         android:paddingStart="20dp"
         android:paddingTop="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
 
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
 
       >
 
@@ -34,7 +36,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <Button
-            android:id="@+id/btn_viewDetail"
+            android:id="@+id/detailsBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="View Detail"
@@ -52,7 +54,7 @@
             android:ems="8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btn_viewDetail"
+            app:layout_constraintStart_toEndOf="@+id/detailsBtn"
             app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
         <TextView

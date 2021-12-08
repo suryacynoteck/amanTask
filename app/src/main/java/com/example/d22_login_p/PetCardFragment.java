@@ -11,14 +11,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.d22_login_p.api_interface.ApiClient;
-import com.example.d22_login_p.api_interface.UserService;
-import com.example.d22_login_p.model.PetDetail;
-import com.example.d22_login_p.model.PetDetailData;
-import com.example.d22_login_p.model.SetPetid;
-import com.example.d22_login_p.model.SetPetidpetData;
+
+import com.bumptech.glide.Glide;
+import com.example.d22_login_p.model.pet.PetDetail;
+import com.example.d22_login_p.model.pet.PetDetailData;
+import com.example.d22_login_p.model.pet.PetDetailDataUser;
+import com.example.d22_login_p.model.pet.SetPetid;
+import com.example.d22_login_p.model.pet.SetPetidpetData;
+import com.example.d22_login_p.retrofit.ApiClient;
+import com.example.d22_login_p.retrofit.UserService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,10 +43,13 @@ public class PetCardFragment extends Fragment {
     //Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
     private UserService apiInterface3;
     private FragmentActivity fragmentActivity;
 
-    private TextView petname, petParentname, petBreedname;
+    private TextView petname,petBreedname,petage,petID,gender;
+    private TextView petParentname, ph_number, address;
+    private ImageView dogimg;
 
     public PetCardFragment() {
         // Required empty public constructor
@@ -57,6 +64,7 @@ public class PetCardFragment extends Fragment {
      * @return A new instance of fragment PetCardFragment.
      */
     //  Rename and change types and number of parameters
+
     public static PetCardFragment newInstance(String param1, String param2) {
         PetCardFragment fragment = new PetCardFragment();
         Bundle args = new Bundle();
@@ -75,6 +83,7 @@ public class PetCardFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -82,27 +91,37 @@ public class PetCardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pet_card, container, false);
 
+
+        dogimg = view.findViewById(R.id.petcard_dogimg);
+
         petname = view.findViewById(R.id.petcard_petName);
-        petParentname = view.findViewById(R.id.petcard_petParentname);
+        petage = view.findViewById(R.id.petcard_age);
         petBreedname = view.findViewById(R.id.petcard_breed);
+        petID = view.findViewById(R.id.petcard_petID);
+        gender = view.findViewById(R.id.petcard_gender);
 
-/*
+
+        petParentname = view.findViewById(R.id.petcard_petParent);
+        ph_number = view.findViewById(R.id.petcard_phno);
+        address = view.findViewById(R.id.petcard_address);
+
+        Log.d("okok", " 6 " );
+
+
+        int  myInt = 9269;          // def value setting,,
+
         Bundle bundle = this.getArguments();
-//        int myInt = 9269;
-//        if (bundle != null) {
-//             myInt = bundle.getInt("id", 9269);
-//        }
-        Log.d("okok", "after bundle obj");
+        if (bundle != null) {
+             myInt = bundle.getInt("position", 9269);
+        }
+        Log.d("okok", "ID in PetCardFragment: " + myInt);
 
-        int  myInt = bundle.getInt("id", 9269);
-        Log.d("okok", "id value: " + myInt);
-*/
 
 
         apiInterface3 = ApiClient.getClient(getActivity()).create(UserService.class);
 
         SetPetidpetData id = new SetPetidpetData();
-        id.setId(9269);                          // TODO:  make id pass dynamically
+        id.setId(myInt);
         SetPetid setPetid = new SetPetid();
         setPetid.setPetData(id);
 
@@ -121,9 +140,34 @@ public class PetCardFragment extends Fragment {
 
                     PetDetailData petDetailData = response.body().getData();
 
+//                    PetDetailDataUser userObj = response.body().getData().getUser();               no need,  insead  userObj.getAddress()  <--> petDetailData.getUser().getAddress()
+
+                    dogimg.setImageResource(R.drawable.dogimggg);
+
                     petname.setText(petDetailData.getPetName());
-                    petParentname.setText(petDetailData.getPetParentName());
                     petBreedname.setText(petDetailData.getPetBreed());
+                    petage.setText(petDetailData.getPetAge());
+                    petID.setText(petDetailData.getPetUniqueId());
+                    gender.setText(petDetailData.getPetSex());
+
+
+                    petParentname.setText(petDetailData.getPetParentName());
+                    ph_number.setText(petDetailData.getContactNumber());
+                    address.setText(petDetailData.getUser().getAddress());
+
+
+                    /*
+                     //  there's no Img url
+
+                    String imgUrl = userObj.getProfileImageUrl();
+                    Log.d("okok", "img Url: " + imgUrl);
+
+        Glide.with(getActivity())
+                .load(imgUrl) // image url
+                .placeholder(R.drawable.dogimggg)
+                .centerCrop()
+                .into(dogimg);  // imageview object
+*/
 
 
                 } else {

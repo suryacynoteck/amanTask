@@ -4,8 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,14 +15,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
-import com.example.d22_login_p.api_interface.ApiClient;
+import com.example.d22_login_p.adapter.myadapter;
 import com.example.d22_login_p.api_interface.OnButtonListener;
-import com.example.d22_login_p.api_interface.UserService;
+
+import com.example.d22_login_p.model.Recycler.RecDataPetlist;
 import com.example.d22_login_p.model.Recycler.RecReqestParams;
 import com.example.d22_login_p.model.Recycler.RecRequest;
 import com.example.d22_login_p.model.Recycler.RecResponse;
-import com.example.d22_login_p.model.Recycler.RecDataPetlist;
+import com.example.d22_login_p.retrofit.ApiClient;
+import com.example.d22_login_p.retrofit.UserService;
 
 import java.util.ArrayList;
 
@@ -34,7 +38,7 @@ import retrofit2.Response;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements OnButtonListener {
+public class HomeFragment extends Fragment implements OnButtonListener  {
 
     //  Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,16 +53,9 @@ public class HomeFragment extends Fragment implements OnButtonListener {
 
     private UserService apiInterface2;
 
-    OnButtonListener thiscontext;
+    private ArrayList<RecDataPetlist> arrayList;
 
-
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-
-        thiscontext = (OnButtonListener) context;
-    }
+    private ProgressBar progressBar;
 
 
 
@@ -100,15 +97,11 @@ public class HomeFragment extends Fragment implements OnButtonListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-//        thiscontext = (OnButtonListener) container.getContext();        //TODO: 1
-
-        Log.d("okok", "under ONcreate");
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView_response);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        progressBar = view.findViewById(R.id.progressBar2);
 
 
         getApidata();
@@ -118,10 +111,6 @@ public class HomeFragment extends Fragment implements OnButtonListener {
     }
 
     private void getApidata() {
-        Log.d("okok", "under getApidata");
-
-
-
 
         apiInterface2 = ApiClient.getClient(getActivity()).create(UserService.class);
 
@@ -136,54 +125,73 @@ public class HomeFragment extends Fragment implements OnButtonListener {
         Log.d("okok", "HomeFragment token: " + token);
 
         Call<RecResponse> recResponseCall = apiInterface2.get_petData(recRequest, token);
-        Log.d("okok", "1");
 
         recResponseCall.enqueue(new Callback<RecResponse>() {
             @Override
             public void onResponse(Call<RecResponse> call, Response<RecResponse> response) {
-                Log.d("okok", "2");
 
-                if (response.isSuccessful()) {
-                    Log.d("okok", "response successful");
 
-                    Log.d("okok", "Response " + response.body().toString());
-                    Log.d("okok", "id " + response.body().getData().getPetlist().get(0).getId());
-                    Log.d("okok", "petname0 " + response.body().getData().getPetlist().get(0).getPetName());
-
-                    Log.d("okok", "id " + response.body().getData().getPetlist().get(1).getId());
-                    Log.d("okok", "petname1 " + response.body().getData().getPetlist().get(1).getPetName());
-
+                    if (response.isSuccessful()) {
+                        Log.d("okok", " Response successful Responsecode: " + response.body().toString());
 //                    int size = response.body().getData().getPetlist().size();
 
-                    ArrayList<RecDataPetlist> arrayList= response.body().getData().getPetlist();
+                        arrayList = response.body().getData().getPetlist();
+                        updateAdapter(arrayList);
 
+                    } else {
+                        Log.d("okok", "response unsucessful");
+                    }
 
-                    recyclerView.setAdapter(new myadapter(arrayList,thiscontext));        // TODO: if working fine
-                    // why passing context >>  referring to the interface
+                        progressBar.setVisibility(View.GONE);
 
-                } else {
-                    Log.d("okok", "response unsucessful");
-                }
             }
 
             @Override
             public void onFailure(Call<RecResponse> call, Throwable t) {
+                Log.d("okok", "onFAILURE activated");
+                progressBar.setVisibility(View.GONE);
 
             }
         });
 
 
 
-        Log.d("okok", "3");
+
+    }
 
 
 
+
+    private void updateAdapter(ArrayList<RecDataPetlist> arrayList) {
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(new myadapter(arrayList,this));                 // TODO: why, we cannot pass this,   inside  onResponse
 
     }
 
     @Override
     public void onButtonclick(int position) {   // THIS WILL  get triggered by --> viweHolder's onClick
-        Log.d("okok", "onButtonclick position: " + position);
-    }
 
+        Log.d("okok", "Button clicked  PET_id: " + position);
+
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        Fragment petCardFragment = new PetCardFragment();        // on which setBundle  and  replace layout with
+        petCardFragment.setArguments(bundle);
+
+        HomeFragment homeFragment = new HomeFragment();
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.mainContainer, petCardFragment);
+//        fragmentTransaction.addToBackStack(null);
+
+        fragmentTransaction.add(R.id.mainContainer, petCardFragment);               //TODO: Fragment backstack2
+        fragmentTransaction.addToBackStack("back");
+
+        fragmentTransaction.commit();
+
+    }
 }

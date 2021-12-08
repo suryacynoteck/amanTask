@@ -14,11 +14,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.d22_login_p.model.Login.LoginParams;
+import com.example.d22_login_p.model.Login.LoginRequest;
+import com.example.d22_login_p.model.Login.LoginResponse;
 import com.example.d22_login_p.retrofit.ApiClient;
+
 import com.example.d22_login_p.retrofit.UserService;
-import com.example.d22_login_p.model.login.LoginParams;
-import com.example.d22_login_p.model.login.LoginRequest;
-import com.example.d22_login_p.model.login.LoginResponse;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -44,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        apiInterface = ApiClient.getClient(this).create(UserService.class);
+        apiInterface = ApiClient.getClient(this).create(UserService.class);       // todo:  declared public static final
 
 
         email = findViewById(R.id.edit_txt_email);

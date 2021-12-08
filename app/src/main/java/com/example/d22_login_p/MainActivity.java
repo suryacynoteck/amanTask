@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.d22_login_p.model.login.LoginResponse;
+import com.example.d22_login_p.model.Login.LoginResponse;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
 
-    LoginResponse loginResponse;        
+    LoginResponse loginResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
         TextView txt_subhead = head.findViewById(R.id.txt_subHead);
         txt_subhead.setText(subhead_txt);
 
-        //TODO: why crashing    , cannot access  via obj.
-//        Log.d("okok", "Email received in MainActivity: " + loginResponse.getData().getEmail());
+
 
         loadFragment(new HomeFragment());
 
@@ -91,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
                         builder.setMessage("Do you want to Exit?")
                                 .setTitle("Logout")
-                                .setCancelable(false)
+                                .setCancelable(true)             //dismissed the dialog when clicking outside of it,
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -130,7 +129,11 @@ public class MainActivity extends AppCompatActivity {
     private void loadFragment(Fragment fragment) {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.mainContainer, fragment);
+//        transaction.replace(R.id.mainContainer, fragment);
+
+        transaction.add(R.id.mainContainer, fragment,"backStack");                  //TODO: Fragment backstack1
+        transaction.addToBackStack("back");
+
         transaction.commit();
 
     }

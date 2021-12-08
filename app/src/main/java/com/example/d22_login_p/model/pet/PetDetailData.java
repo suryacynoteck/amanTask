@@ -1,5 +1,5 @@
 
-package com.example.d22_login_p.model;
+package com.example.d22_login_p.model.pet;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 
-public class PetDetailData {
+public class PetDetailData {        //TODO:  update1 wrt POSTMAN @POST req.
 
     @SerializedName("id")
     @Expose
@@ -57,9 +57,15 @@ public class PetDetailData {
     @SerializedName("contactNumber")
     @Expose
     private String contactNumber;
+
+//    @SerializedName("address")          // TODO: why Obj return type
+//    @Expose
+//    private Object address;
+
     @SerializedName("address")
     @Expose
-    private Object address;
+    private String  address;
+
     @SerializedName("dateOfBirth")
     @Expose
     private String dateOfBirth;
@@ -78,9 +84,11 @@ public class PetDetailData {
     @SerializedName("createDate")
     @Expose
     private String createDate;
+
     @SerializedName("petProfileImageUrl")
     @Expose
-    private Object petProfileImageUrl;
+    private String  petProfileImageUrl;
+
     @SerializedName("firstServiceImageUrl")
     @Expose
     private Object firstServiceImageUrl;
@@ -129,9 +137,11 @@ public class PetDetailData {
     @SerializedName("microchipNumber")
     @Expose
     private Object microchipNumber;
+
     @SerializedName("user")
     @Expose
     private PetDetailDataUser user;
+
     @SerializedName("petTypeList")
     @Expose
     private List<PetDetailDataPetType> petTypeList = null;
@@ -370,9 +380,13 @@ public class PetDetailData {
         return address;
     }
 
-    public void setAddress(Object address) {
-        this.address = address;
+    public String  getAddress_str() {
+        return address;
     }
+
+//    public void setAddress(Object address) {
+//        this.address = address;
+//    }
 
     public String getDateOfBirth() {
         return dateOfBirth;
@@ -422,13 +436,11 @@ public class PetDetailData {
         this.createDate = createDate;
     }
 
-    public Object getPetProfileImageUrl() {
+    public String  getPetProfileImageUrl() {
         return petProfileImageUrl;
     }
 
-    public void setPetProfileImageUrl(Object petProfileImageUrl) {
-        this.petProfileImageUrl = petProfileImageUrl;
-    }
+
 
     public Object getFirstServiceImageUrl() {
         return firstServiceImageUrl;

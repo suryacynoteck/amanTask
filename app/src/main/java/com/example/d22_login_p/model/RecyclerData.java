@@ -1,6 +1,6 @@
 package com.example.d22_login_p.model;
 
-import com.example.d22_login_p.model.pet.PetListData;
+import com.example.d22_login_p.model.Recycler.RecDataPetlist;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,18 +10,18 @@ public class RecyclerData {
 
     @SerializedName("petList")
     @Expose
-    private ArrayList<PetListData> petlist;
+    private ArrayList<RecDataPetlist> petlist;
 
     @SerializedName("pagingHeader")
     @Expose
     private PagingHeader pagingHeader;
 
 
-    public ArrayList<PetListData> getPetlist() {
+    public ArrayList<RecDataPetlist> getPetlist() {
         return petlist;
     }
 
-    public void setPetlist(ArrayList<PetListData> petlist) {
+    public void setPetlist(ArrayList<RecDataPetlist> petlist) {
         this.petlist = petlist;
     }
 

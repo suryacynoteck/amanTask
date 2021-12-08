@@ -1,11 +1,11 @@
-package com.example.d22_login_p.model;
+package com.example.d22_login_p.model.pet;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class PetDetailDataUser {
+public class PetDetailDataUser {          //TODO:  update2 wrt POSTMAN @POST req.
 
     @SerializedName("encryptedId")
     @Expose
@@ -67,9 +67,11 @@ public class PetDetailDataUser {
     @SerializedName("qualification")
     @Expose
     private Object qualification;
+
     @SerializedName("address")
     @Expose
     private String address;
+
     @SerializedName("locationId")
     @Expose
     private Integer locationId;
@@ -85,9 +87,11 @@ public class PetDetailDataUser {
     @SerializedName("zipCode")
     @Expose
     private Object zipCode;
+
     @SerializedName("profileImageUrl")
     @Expose
-    private Object profileImageUrl;
+    private String  profileImageUrl;
+
     @SerializedName("locationList")
     @Expose
     private Object locationList;
@@ -408,13 +412,10 @@ public class PetDetailDataUser {
         this.zipCode = zipCode;
     }
 
-    public Object getProfileImageUrl() {
+    public String getProfileImageUrl() {
         return profileImageUrl;
     }
 
-    public void setProfileImageUrl(Object profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
-    }
 
     public Object getLocationList() {
         return locationList;
