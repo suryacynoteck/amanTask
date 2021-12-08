@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.d22_login_p.model.Login.LoginResponse;
 import com.google.android.material.navigation.NavigationView;
@@ -28,11 +29,14 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
 
     LoginResponse loginResponse;
+    private long backPressedTime; // for back button,,
+    private Toast backToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 //        getActionBar().hide();
 
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        loadFragment(new HomeFragment());
+        loadFragment(new HomeFragment());               // by default ,,  HomeFragment(RecyclerView) is def. layout of MainActivity
 
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -130,14 +134,36 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.mainContainer, fragment);
-        transaction.addToBackStack(null);
+//        transaction.addToBackStack(null);                     //  creating the issue  of back press, Blank Activity
 
-//        transaction.add(R.id.mainContainer, fragment,"backStack");                  //TODO: Fragment backstack1
+//        transaction.add(R.id.mainContainer, fragment,"backStack");
 //        transaction.addToBackStack("back");
 
         transaction.commit();
 
     }
+
+
+    /*
+    @Override
+    public void onBackPressed() {                           //TODO:  issue: implementing on every fragment  , wanted to run only on HomeFragment
+       Log.d("okok", "____onBAckpressed_____");
+
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+
+//            this.finishAffinity();         // exits the whole app
+            super.onBackPressed();
+
+        } else {
+            backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
+    }
+    */
+
+
 
 
 }
