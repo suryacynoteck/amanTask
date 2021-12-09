@@ -171,8 +171,8 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
     private void updateAdapter(ArrayList<RecDataPetlist> arrayList) {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(new myadapter(arrayList,this,context));                 // TODO: why, we cannot pass this,   inside  onResponse
+//        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(new myadapter(arrayList,this,context));
 
     }
 
