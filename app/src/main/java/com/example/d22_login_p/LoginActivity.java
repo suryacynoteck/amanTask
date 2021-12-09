@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -38,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText pass_edt;
     private UserService apiInterface;
     ProgressBar progressBar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,11 @@ public class LoginActivity extends AppCompatActivity {
                 params.setPassword(pass_user);
                 loginRequest.setData(params);       //   <<--
 
-                login(loginRequest);
+                if (isOnline()) {
+                    login(loginRequest);
+                }
+
+
 
             }
         });
@@ -97,6 +102,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean isOnline() {
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {
+
+            Toast.makeText(LoginActivity.this, "No Internet Connection", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
 

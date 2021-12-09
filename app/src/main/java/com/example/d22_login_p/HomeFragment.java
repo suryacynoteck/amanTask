@@ -1,7 +1,11 @@
 package com.example.d22_login_p;
 
+import static android.content.Context.CONNECTIVITY_SERVICE;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.d22_login_p.adapter.myadapter;
 import com.example.d22_login_p.api_interface.OnButtonListener;
@@ -187,18 +192,38 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
         Fragment petCardFragment = new PetCardFragment();        // on which setBundle  and  replace layout with
         petCardFragment.setArguments(bundle);
 
-        HomeFragment homeFragment = new HomeFragment();
 
+        if (isOnline()) {                               //TODO:  how to reUse LoginActivity's isOnline()
+            moveToFragment(petCardFragment);
+        }
+
+
+
+
+    }
+
+    private boolean isOnline() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {
+
+            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    private void moveToFragment(Fragment petCardFragment) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.mainContainer, petCardFragment);
         fragmentTransaction.addToBackStack(null);
 
-//        fragmentTransaction.add(R.id.mainContainer, petCardFragment);               //TODO: Fragment backstack2
+//        fragmentTransaction.add(R.id.mainContainer, petCardFragment);
 //        fragmentTransaction.addToBackStack("back");
 
         fragmentTransaction.commit();
-
     }
 
 }
