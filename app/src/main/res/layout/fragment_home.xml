@@ -16,14 +16,13 @@
         android:paddingTop="?attr/actionBarSize">
 
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_response"
 
             android:layout_width="match_parent"
 
             android:layout_height="match_parent"
-
+            android:layout_marginTop="40dp"
 
 
             app:layout_constraintBottom_toBottomOf="parent"
@@ -60,10 +59,43 @@
             app:layout_constraintVertical_bias="0.78"
             tools:visibility="visible" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:background="@color/purple_500"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+
+            >
+
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="20dp"
+
+                android:background="@drawable/search_bg"
+
+                android:queryHint="Search here..."
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 </FrameLayout>

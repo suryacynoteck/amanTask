@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.d22_login_p.adapter.myadapter;
@@ -66,6 +67,8 @@ public class HomeFragment extends Fragment implements OnButtonListener {
 
     private ProgressBar progressBar;
     private Context context;
+
+    private SearchView searchView;
 
 
 
@@ -117,12 +120,30 @@ public class HomeFragment extends Fragment implements OnButtonListener {
         recyclerView = view.findViewById(R.id.recyclerView_response);
         progressBar = view.findViewById(R.id.progressBar2);
 
+        searchView = view.findViewById(R.id.searchView);
 
+        SearchViewFilter();
 
         getApidata();
 
 
         return view;
+    }
+
+    private void SearchViewFilter() {
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
     }
 
 
