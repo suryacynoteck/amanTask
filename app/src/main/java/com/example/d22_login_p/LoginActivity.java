@@ -2,6 +2,7 @@ package com.example.d22_login_p;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -16,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.d22_login_p.common_functionality.Internet_permission;
 import com.example.d22_login_p.model.Login.LoginParams;
 import com.example.d22_login_p.model.Login.LoginRequest;
 import com.example.d22_login_p.model.Login.LoginResponse;
@@ -32,14 +34,16 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    EditText email;
-    TextInputLayout password;
-    TextView txt_forgot_pass, txt_Register;
-    Button btn_login;
+    private EditText email;
+    private TextInputLayout password;
+    private TextView txt_forgot_pass, txt_Register;
+    private Button btn_login;
     private String email_user, pass_user;
     private TextInputEditText pass_edt;
     private UserService apiInterface;
-    ProgressBar progressBar;
+   private ProgressBar progressBar;
+
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
         apiInterface = ApiClient.getClient(this).create(UserService.class);       // todo:  declared public static final
 
+        context = getApplicationContext();          //  vs getBaseContext
 
         email = findViewById(R.id.edit_txt_email);
         password = findViewById(R.id.edit_txt_pass);
@@ -79,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 params.setPassword(pass_user);
                 loginRequest.setData(params);       //   <<--
 
-                if (isOnline()) {
+                if (Internet_permission.isOnline(context)) {
                     login(loginRequest);
                 }
 
@@ -104,18 +109,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private boolean isOnline() {
 
-        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-        if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {
-
-            Toast.makeText(LoginActivity.this, "No Internet Connection", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
 
 
     private void login(LoginRequest loginReqParam) {

@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.d22_login_p.adapter.myadapter;
 import com.example.d22_login_p.api_interface.OnButtonListener;
 
+import com.example.d22_login_p.common_functionality.Internet_permission;
 import com.example.d22_login_p.model.Recycler.RecDataPetlist;
 import com.example.d22_login_p.model.Recycler.RecReqestParams;
 import com.example.d22_login_p.model.Recycler.RecRequest;
@@ -193,7 +194,7 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
         petCardFragment.setArguments(bundle);
 
 
-        if (isOnline()) {                               //TODO:  how to reUse LoginActivity's isOnline()
+        if (Internet_permission.isOnline(context)) {                               //TODO:  how to reUse LoginActivity's isOnline()
             moveToFragment(petCardFragment);
         }
 
@@ -202,17 +203,7 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
 
     }
 
-    private boolean isOnline() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {
-
-            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
 
     private void moveToFragment(Fragment petCardFragment) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
