@@ -16,12 +16,16 @@
         android:paddingTop="?attr/actionBarSize">
 
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_response"
 
             android:layout_width="match_parent"
 
             android:layout_height="match_parent"
+
+
+
             app:layout_constraintBottom_toBottomOf="parent"
 
 
@@ -30,10 +34,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            tools:listitem="@layout/single_row_design"
-           />
-<!--
+            tools:listitem="@layout/single_row_design" />
+        <!--
   tools:listitem="@layout/single_row_design"
+
+  ?attr/bottomNavigationStyle
 -->
 
         <ProgressBar
@@ -55,14 +60,6 @@
             app:layout_constraintVertical_bias="0.78"
             tools:visibility="visible" />
 
-        <!--
-
-
-  app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-        -->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

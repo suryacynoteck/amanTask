@@ -137,6 +137,8 @@ public class PetCardFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     Log.d("okok", "response code: " + response.body().getData().getPetName());
+                    Log.d("okok", "petid: " + response.body().getData().getPetUniqueId());
+                    Log.d("okok", "age: " + response.body().getData().getPetAge());
 
                     PetDetailData petDetailData = response.body().getData();
 

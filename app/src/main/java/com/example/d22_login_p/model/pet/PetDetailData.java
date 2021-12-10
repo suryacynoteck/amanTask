@@ -58,7 +58,7 @@ public class PetDetailData {        //TODO:  update1 wrt POSTMAN @POST req.
     @Expose
     private String contactNumber;
 
-//    @SerializedName("address")          // TODO: why Obj return type
+//    @SerializedName("address")
 //    @Expose
 //    private Object address;
 

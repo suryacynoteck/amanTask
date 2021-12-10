@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -33,6 +34,7 @@ import com.example.d22_login_p.model.Recycler.RecRequest;
 import com.example.d22_login_p.model.Recycler.RecResponse;
 import com.example.d22_login_p.retrofit.ApiClient;
 import com.example.d22_login_p.retrofit.UserService;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
@@ -45,7 +47,7 @@ import retrofit2.Response;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements OnButtonListener  {
+public class HomeFragment extends Fragment implements OnButtonListener {
 
     //  Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,6 +66,7 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
 
     private ProgressBar progressBar;
     private Context context;
+
 
 
     @Override
@@ -95,7 +98,6 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,11 +118,13 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
         progressBar = view.findViewById(R.id.progressBar2);
 
 
+
         getApidata();
 
 
         return view;
     }
+
 
     private void getApidata() {
 
@@ -143,18 +147,18 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
             public void onResponse(Call<RecResponse> call, Response<RecResponse> response) {
 
 
-                    if (response.isSuccessful()) {
-                        Log.d("okok", " Response successful Responsecode: " + response.body().toString());
+                if (response.isSuccessful()) {
+                    Log.d("okok", " Response successful Responsecode: " + response.body().toString());
 //                    int size = response.body().getData().getPetlist().size();
 
-                        arrayList = response.body().getData().getPetlist();
-                        updateAdapter(arrayList);
+                    arrayList = response.body().getData().getPetlist();
+                    updateAdapter(arrayList);
 
-                    } else {
-                        Log.d("okok", "response unsucessful");
-                    }
+                } else {
+                    Log.d("okok", "response unsucessful");
+                }
 
-                        progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
 
             }
 
@@ -167,18 +171,14 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
         });
 
 
-
-
     }
-
-
 
 
     private void updateAdapter(ArrayList<RecDataPetlist> arrayList) {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(new myadapter(arrayList,this,context));
+        recyclerView.setAdapter(new myadapter(arrayList, this, context));
 
     }
 
@@ -194,18 +194,15 @@ public class HomeFragment extends Fragment implements OnButtonListener  {
         petCardFragment.setArguments(bundle);
 
 
-        if (Internet_permission.isOnline(context)) {                               //TODO:  how to reUse LoginActivity's isOnline()
+        if (Internet_permission.isOnline(context)) {
             moveToFragment(petCardFragment);
         }
-
-
 
 
     }
 
 
-
-    private void moveToFragment(Fragment petCardFragment) {
+    private void moveToFragment(Fragment petCardFragment) {             //TODO: make seperate class,  static method:  therefore pass> context , R.id.  , Fragemnt obj
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.mainContainer, petCardFragment);

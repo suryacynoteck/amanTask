@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.d22_login_p.model.Login.LoginResponse;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     LoginResponse loginResponse;
     private long backPressedTime; // for back button,,
     private Toast backToast;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,35 @@ public class MainActivity extends AppCompatActivity {
 
         nav = findViewById(R.id.navmenu);
         drawerLayout = findViewById(R.id.drawer);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+      bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+          @Override
+          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                  Fragment selectedFragment = null;
+
+                  switch (item.getItemId()) {
+
+                      case R.id.nav_home:
+                          selectedFragment = new HomeFragment();
+                          loadFragment(selectedFragment);
+                          break;
+                      case R.id.nav_fav:
+                          selectedFragment = new SettingFragment();
+                          loadFragment(selectedFragment);
+
+                          break;
+
+                      case R.id.nav_map:
+                          // todo: add 2nd nav bottom
+
+                          break;
+                  }
+                  return true;
+          }
+      });
+
 
         // setting toggle bar ,,   via code
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
@@ -129,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
     private void loadFragment(Fragment fragment) {
 
