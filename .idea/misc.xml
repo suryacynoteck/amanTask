@@ -18,11 +18,13 @@
         <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/menu/drawer.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/cyno/AndroidStudioProjects/d22_login_p/app/src/main/res/menu/iconmenu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/drawable/exp_btn_shape.xml" value="0.1925925925925926" />
+        <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/drawable/password_bottom_line.xml" value="0.2203125" />
         <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/drawable/round_button.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/drawable/search_bg.xml" value="0.18055555555555555" />
-        <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/layout/activity_login.xml" value="0.22" />
+        <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/layout/fragment_map.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/layout/fragment_pet_card.xml" value="0.25" />
         <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/layout/fragment_setting.xml" value="0.14814814814814814" />
         <entry key="..\:/Users/cyno/MyApps1/AndroidStudioProjects/00Petofy_Sys/app/src/main/res/layout/navheader.xml" value="0.19947916666666668" />

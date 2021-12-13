@@ -1,10 +1,12 @@
 package com.example.petofyReplica;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -61,6 +63,9 @@ public class LoginActivity extends AppCompatActivity {
 
         btn_login = findViewById(R.id.button);
         progressBar = findViewById(R.id.progressBar);
+
+        email.getBackground().setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.cardview_dark_background), PorterDuff.Mode.SRC_IN);
+        pass_edt.getBackground().setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.purple_500), PorterDuff.Mode.SRC_IN);      //TODO: why not purple color, set  ( by def. black color only on password)
 
 
 
