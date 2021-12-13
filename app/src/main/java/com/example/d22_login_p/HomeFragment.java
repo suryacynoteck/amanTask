@@ -43,11 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class HomeFragment extends Fragment implements OnButtonListener {
 
     //  Rename parameter arguments, choose names that match
@@ -64,6 +60,7 @@ public class HomeFragment extends Fragment implements OnButtonListener {
     private UserService apiInterface2;
 
     private ArrayList<RecDataPetlist> arrayList;
+    private myadapter adapter;
 
     private ProgressBar progressBar;
     private Context context;
@@ -78,37 +75,6 @@ public class HomeFragment extends Fragment implements OnButtonListener {
         this.context = context;
     }
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -140,6 +106,22 @@ public class HomeFragment extends Fragment implements OnButtonListener {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
+                ArrayList<RecDataPetlist> filtered_list = new ArrayList<>();
+
+                for (RecDataPetlist item : arrayList) {
+
+                    if (item.getPetName().toLowerCase().contains(newText.toLowerCase())) {
+                        // if item exist we add to our filtered list
+                        filtered_list.add(item);
+                    }
+                }
+                if (filtered_list.isEmpty()) {
+                    Toast.makeText(getActivity(), "No Data Found..", Toast.LENGTH_SHORT).show();
+                } else {
+                    adapter.filterList(filtered_list);          // todo:  understand,,
+                }
+
                 return false;
             }
         });
@@ -199,7 +181,9 @@ public class HomeFragment extends Fragment implements OnButtonListener {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(new myadapter(arrayList, this, context));
+
+        adapter = new myadapter(arrayList, this, context);
+        recyclerView.setAdapter(adapter);
 
     }
 
