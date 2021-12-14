@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
                           break;
 
                       case R.id.nav_map:
-                          // todo: add 2nd nav bottom
-
+                          selectedFragment = new MapFragment();
+                          loadFragment(selectedFragment);
                           break;
                   }
                   return true;
