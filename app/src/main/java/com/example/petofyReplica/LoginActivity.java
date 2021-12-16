@@ -29,7 +29,6 @@ import com.example.petofyReplica.retrofit.ApiClient;
 
 import com.example.petofyReplica.retrofit.UserService;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookActivity;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
@@ -47,7 +46,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import retrofit2.Call;
@@ -106,6 +104,36 @@ public class LoginActivity extends AppCompatActivity {
         pass_edt.getBackground().setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.purple_500), PorterDuff.Mode.SRC_IN);      //TODO: why not purple color, set  ( by def. black color only on password)
 
 
+        loginButton_Clicked();
+
+        fbButton_Clicked();
+
+        googleButton_Clicked();
+
+
+
+
+        //----------------x--forgot pass--x--------------xregisterx-------------------
+        txt_Register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoginActivity.this, "Registering...", Toast.LENGTH_SHORT).show();
+            }
+        });
+        txt_forgot_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoginActivity.this, "this is forgot password", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+
+    // ----------------------------------------------Petofy API>>------------------------------------------------
+
+    private void loginButton_Clicked() {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 params.setEmail(email_user);
                 params.setPassword(pass_user);
-                loginRequest.setData(params);       //   <<--
+                loginRequest.setData(params);
 
                 if (Internet_permission.isOnline(context)) {
                     login(loginRequest);
@@ -131,9 +159,89 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void login(LoginRequest loginReqParam) {
+
+        progressBar.setVisibility(View.VISIBLE);
+        Call<LoginResponse> loginResponseCall = apiInterface.userLogin(loginReqParam);
+
+        loginResponseCall.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+
+                if (response.isSuccessful()) {
+
+                    LoginResponse loginResponse = response.body();
+
+                    Log.d("okok", "onResponse: " + loginResponse.getResponse().getResponseCode());
+                    Log.d("okok", "Response Code : " + loginResponse.getData().getPhoneNumber());
+
+                    Log.d("okok", "Response Code : " + loginResponse.getData().getFirstName());
+                    Log.d("okok", "Email : " + loginResponse.getData().getEmail());
+                    Log.d("okok", "token: " + loginResponse.getResponse().getToken());
+
+                    String token = loginResponse.getResponse().getToken().toString();
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("token", token);
+                    editor.apply();
 
 
-                                // ----------------x--FB sign in process>>----------------x--
+                    progressBar.setVisibility(View.GONE);
+
+                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+
+                    navHead_name = loginResponse.getData().getFirstName();
+
+                    start_MainActivity();
+
+
+                } else {
+                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Throwable: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+
+    }
+    private boolean validate_password() {
+
+        String passwordInput = password.getEditText().getText().toString().trim();
+        if (passwordInput.isEmpty()) {
+            password.setError("Fields can't be empty");
+            return false;
+        } else {
+            password.setError(null);
+            return true;
+        }
+
+    }
+    private boolean validate_email() {
+
+        String emailInput = email.getEditableText().toString().trim();
+        if (emailInput.isEmpty()) {
+            email.setError("Field empty");
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+            email.setError("enter a valid email address");
+            return false;
+        } else {
+            email.setError(null);
+            return true;
+        }
+
+    }
+
+    // ----------------------------------------------FB sign in process>>--------------------------------------------
+    private void fbButton_Clicked() {
         fb_Signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,50 +270,11 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(@NonNull FacebookException e) {
-
-            }
-        });
-
-
-                                // ----------------x--Google sign in process>>----------------x--
-
-// Configure sign-in to request the user's ID, email address, and basic
-// profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        // Check for existing Google Sign In account, if the user is already signed in
-// the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-
-        google_Signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                googlesignIn();
-            }
-        });
-
-
-        //----------------x--forgot pass--x--------------xregisterx-------------------
-        txt_Register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "Registering...", Toast.LENGTH_SHORT).show();
-            }
-        });
-        txt_forgot_pass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "this is forgot password", Toast.LENGTH_SHORT).show();
+                Log.d("okok", e.getLocalizedMessage());
             }
         });
 
     }
-
     private void setFacebookData(LoginResult loginResult) {
         Log.d("okok", "under set_FB_data");
 
@@ -266,13 +335,36 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
+
+    // ----------------------------------------------Google sign in process>>--------------------------------------------
+    private void googleButton_Clicked() {
+        // Configure sign-in to request the user's ID, email address, and basic
+// profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        // Check for existing Google Sign In account, if the user is already signed in
+// the GoogleSignInAccount will be non-null.
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+        google_Signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                googlesignIn();
+            }
+        });
+    }
     private void googlesignIn() {
 
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
 
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -285,10 +377,9 @@ public class LoginActivity extends AppCompatActivity {
             handleSignInResult(task);
         }
 
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);            // FB
 
     }
-
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
 
         try {
@@ -297,13 +388,13 @@ public class LoginActivity extends AppCompatActivity {
             // Signed in successfully, show authenticated UI.
             if (account != null) {
                 String personName = account.getDisplayName();
-                String personGivenName = account.getGivenName();
-                String personFamilyName = account.getFamilyName();
+//                String personGivenName = account.getGivenName();
+//                String personFamilyName = account.getFamilyName();
                 String personEmail = account.getEmail();
-                String personId = account.getId();
+//                String personId = account.getId();
                 Uri personPhoto = account.getPhotoUrl();
 
-                Toast.makeText(this, "Signing in :" + personEmail, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Signing in as :" + personEmail, Toast.LENGTH_SHORT).show();
 
                 navHead_name = personName;
                 start_MainActivity();
@@ -319,59 +410,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void login(LoginRequest loginReqParam) {
-
-        progressBar.setVisibility(View.VISIBLE);
-        Call<LoginResponse> loginResponseCall = apiInterface.userLogin(loginReqParam);
-
-        loginResponseCall.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-
-                if (response.isSuccessful()) {
-
-                    LoginResponse loginResponse = response.body();
-
-                    Log.d("okok", "onResponse: " + loginResponse.toString());
-                    Log.d("okok", "onResponse: " + loginResponse.getResponse().getResponseCode());
-                    Log.d("okok", "Response Code : " + loginResponse.getData().getPhoneNumber());
-
-                    Log.d("okok", "Response Code : " + loginResponse.getData().getFirstName());
-                    Log.d("okok", "Email : " + loginResponse.getData().getEmail());
-                    Log.d("okok", "token: " + loginResponse.getResponse().getToken());
-
-                    String token = loginResponse.getResponse().getToken().toString();
-
-                    SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("token", token);
-                    editor.apply();
 
 
-                    progressBar.setVisibility(View.GONE);
-
-                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-
-                    navHead_name = loginResponse.getData().getFirstName();
-
-                    start_MainActivity();
-
-
-                } else {
-                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Throwable: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.GONE);
-            }
-        });
-
-
-    }
+//    ---------------------------  other f() ----------------------------------------------
 
     private void start_MainActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -381,33 +422,5 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private boolean validate_password() {
-
-        String passwordInput = password.getEditText().getText().toString().trim();
-        if (passwordInput.isEmpty()) {
-            password.setError("Fields can't be empty");
-            return false;
-        } else {
-            password.setError(null);
-            return true;
-        }
-
-    }
-
-    private boolean validate_email() {
-
-        String emailInput = email.getEditableText().toString().trim();
-        if (emailInput.isEmpty()) {
-            email.setError("Field empty");
-            return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            email.setError("enter a valid email address");
-            return false;
-        } else {
-            email.setError(null);
-            return true;
-        }
-
-    }
 
 }

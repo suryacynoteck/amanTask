@@ -167,12 +167,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         Task<Location> task = client.getLastLocation();         // ab code generated directly by google,, by this code's error line
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
-            public void onSuccess(Location location) {
-
+            public void onSuccess(Location location) {          // todo: Current location might me off,  therfore explicitly ask user,, to turn on the location via Dialog
+                                                                        // (in case:Mobile current location off) at time of debugging  "location = null", will show,,
                 mapFragment.getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(@NonNull GoogleMap googleMap) {
-
+                        map = googleMap;
                         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
                         loadMarkerOptions(latLng);
