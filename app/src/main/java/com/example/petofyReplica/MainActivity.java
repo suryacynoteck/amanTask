@@ -94,9 +94,10 @@ public class MainActivity extends AppCompatActivity {
         TextView txt_head = head.findViewById(R.id.txt_Head);
         txt_head.setText(head_txt);
 
-        TextView txt_subhead = head.findViewById(R.id.txt_subHead);
-        txt_subhead.setText(subhead_txt);
+//        TextView txt_subhead = head.findViewById(R.id.txt_subHead);       //todo: extract email, / in case null set validation
+//        txt_subhead.setText(subhead_txt);
 
+        //todo: set Photo from FB / google Photo url,,
 
 
         loadFragment(new HomeFragment());               // by default ,,  HomeFragment(RecyclerView) is def. layout of MainActivity

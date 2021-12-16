@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/cardview_light_background"
         android:textSize="10dp"
-        android:text="Computer Science and Engg"/>
+        android:text=""/>
 
 
 </LinearLayout>
