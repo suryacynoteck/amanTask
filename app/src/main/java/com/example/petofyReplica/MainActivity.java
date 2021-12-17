@@ -84,15 +84,20 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
                                 //  gettting Info from  Bundle ,,,  from LoginActivity
+
         Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {                // todo: check if it works
 
-        String head_txt = bundle.getString("head_txt");
-        String subhead_txt = bundle.getString("subhead_txt");
+                                                        // since calling MainActivity via Phno.  will not have any data,
+            String head_txt = bundle.getString("head_txt");
+            String subhead_txt = bundle.getString("subhead_txt");
 
-        // accessgin Header fields ( txt_head &  txt_subtext)
-        View head = nav.getHeaderView(0);
-        TextView txt_head = head.findViewById(R.id.txt_Head);
-        txt_head.setText(head_txt);
+            // accessgin Header fields ( txt_head &  txt_subtext)
+            View head = nav.getHeaderView(0);
+            TextView txt_head = head.findViewById(R.id.txt_Head);
+            txt_head.setText(head_txt);
+        }
+
 
 //        TextView txt_subhead = head.findViewById(R.id.txt_subHead);       //todo: extract email, / in case null set validation
 //        txt_subhead.setText(subhead_txt);

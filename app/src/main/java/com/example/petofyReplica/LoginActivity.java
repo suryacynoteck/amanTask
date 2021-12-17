@@ -63,11 +63,12 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText pass_edt;
     private UserService apiInterface;
     private ProgressBar progressBar;
-    private ImageView google_Signin, fb_Signin;
+    private ImageView google_Signin, fb_Signin,otp_Signin;
     GoogleSignInClient mGoogleSignInClient;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
+
 
     private String navHead_name;
 //    private String navHead_email;     //todo: later pass 3 things
@@ -98,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         google_Signin = findViewById(R.id.img_googleSignin);
         fb_Signin = findViewById(R.id.img_fbSignin);
         loginButton = findViewById(R.id.login_button);
+        otp_Signin = findViewById(R.id.img_mobile_otp);
 
 
         email.getBackground().setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.cardview_dark_background), PorterDuff.Mode.SRC_IN);
@@ -110,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
 
         googleButton_Clicked();
 
+        phone_otp_Clicked();
 
 
 
@@ -129,6 +132,19 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void phone_otp_Clicked() {
+
+        otp_Signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LoginActivity.this, PhoneOTPActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+    }
 
 
     // ----------------------------------------------Petofy API>>------------------------------------------------

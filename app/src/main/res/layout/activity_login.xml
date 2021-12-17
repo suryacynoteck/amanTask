@@ -59,7 +59,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/round_button"
         android:backgroundTint="@color/purple_700"
@@ -144,28 +144,28 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <ImageView
-        android:id="@+id/img_googleSignin"
-        android:layout_width="70dp"
+        android:id="@+id/img_fbSignin"
+        android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginTop="51dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/img_googleSignin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/img_googleSignin"
+        app:layout_constraintTop_toTopOf="@+id/img_googleSignin"
+        app:srcCompat="@drawable/fb" />
+
+    <ImageView
+        android:id="@+id/img_googleSignin"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="32dp"
         android:clickable="true"
         app:layout_constraintEnd_toStartOf="@+id/img_fbSignin"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
         app:srcCompat="@drawable/google" />
-
-    <ImageView
-        android:id="@+id/img_fbSignin"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="51dp"
-        android:clickable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/img_googleSignin"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Registernow"
-        app:srcCompat="@drawable/fb" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
@@ -174,12 +174,56 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_googleSignin"
         tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text=" Login with Mobile otp"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <ImageView
+        android:id="@+id/img_mobile_otp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+
+        android:layout_marginStart="16dp"
+        android:clickable="true"
+
+        android:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.488"
+        app:srcCompat="@drawable/ic_phone" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="141dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="or Sign in with"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
     <!--todo: wanted the same functionality with fb icon-->
 

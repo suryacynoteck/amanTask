@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "145695196046",
+    "project_id": "petofy-replica-1639555185635",
+    "storage_bucket": "petofy-replica-1639555185635.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145695196046:android:cb488023b3dd3ed8b81adf",
+        "android_client_info": {
+          "package_name": "com.example.petofyReplica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145695196046-2n751rc3kelbr3pnddp52qko2endugtm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7Fsfsg52C9AkuOmPwRycX3hmZqMGx6LQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145695196046-2n751rc3kelbr3pnddp52qko2endugtm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
