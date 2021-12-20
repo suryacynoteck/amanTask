@@ -77,10 +77,25 @@ public class LoginActivity extends AppCompatActivity {
     private Context context;
     private static int RC_SIGN_IN = 100;
 
+
+    private static final String SHARED_PREF_NAME = "petofyReplica";
+    private static final String SHARED_PREF_isLogin = "isLogin";
+    SharedPreferences sharedPreferences ;
+    /*
+    * NOTE:  the SharedPref  of token is stored in LoginButtonClicked() ,,,
+    *       the SharedPref_isLogin  of all 3 : google/fb Signin & login is in startActivity()
+    * */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        if (IsLoggedin.getLoginStatus(getBaseContext())) {
+            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
 
         apiInterface = ApiClient.getClient(this).create(UserService.class);       // todo:  declared public static final
 
@@ -104,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
 
         email.getBackground().setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.cardview_dark_background), PorterDuff.Mode.SRC_IN);
         pass_edt.getBackground().setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.purple_500), PorterDuff.Mode.SRC_IN);      //TODO: why not purple color, set  ( by def. black color only on password)
+
 
 
         loginButton_Clicked();
@@ -132,6 +148,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
     private void phone_otp_Clicked() {
 
         otp_Signin.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(LoginActivity.this, PhoneOTPActivity.class);
                 startActivity(intent);
+
 
             }
         });
@@ -192,13 +210,13 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("okok", "onResponse: " + loginResponse.getResponse().getResponseCode());
                     Log.d("okok", "Response Code : " + loginResponse.getData().getPhoneNumber());
 
-                    Log.d("okok", "Response Code : " + loginResponse.getData().getFirstName());
+                    Log.d("okok", "Response Code : " + loginResponse.getData().getFirstName());     // todo: save userName >> also in SharedPref,
                     Log.d("okok", "Email : " + loginResponse.getData().getEmail());
                     Log.d("okok", "token: " + loginResponse.getResponse().getToken());
 
                     String token = loginResponse.getResponse().getToken().toString();
 
-                    SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
+                    sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("token", token);
                     editor.apply();
@@ -323,6 +341,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         navHead_name = currentprofile.getName().toString();
 
+
                                         start_MainActivity();
                                     }
                                 };
@@ -413,6 +432,9 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Signing in as :" + personEmail, Toast.LENGTH_SHORT).show();
 
                 navHead_name = personName;
+
+
+
                 start_MainActivity();
 
             }
@@ -431,10 +453,16 @@ public class LoginActivity extends AppCompatActivity {
 //    ---------------------------  other f() ----------------------------------------------
 
     private void start_MainActivity() {
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(SHARED_PREF_isLogin, true);
+        editor.apply();
+
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("head_txt", navHead_name);
 //        intent.putExtra("subhead_txt", loginResponse.getData().getEmail());
         startActivity(intent);
+        finish();
 
     }
 

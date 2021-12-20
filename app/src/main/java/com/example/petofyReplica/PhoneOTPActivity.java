@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +32,10 @@ public class PhoneOTPActivity extends AppCompatActivity {
     private String final_phoneNo;
     private FirebaseAuth mAuth;
     private String otpid;
+    private static final String SHARED_PREF_NAME = "petofyReplica";
+    private static final String SHARED_PREF_isLogin = "isLogin";
+    SharedPreferences sharedPreferences ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +80,7 @@ public class PhoneOTPActivity extends AppCompatActivity {
                 } else if (editText_otp.getText().toString().length() != 6) {
                     Toast.makeText(getApplicationContext(), "Invalid otp", Toast.LENGTH_SHORT).show();
                 } else {
-
+                                 // since now, we have otpID from initiateOTP()   &    from the  editText_otp  , we are generating credential and calling credential f()
                     PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, editText_otp.getText().toString());
                     signInwithPhoneAuth(credential);
 
@@ -101,13 +106,13 @@ public class PhoneOTPActivity extends AppCompatActivity {
                 new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
                     @Override
-                    public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                        otpid = s;
+                    public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {         // case if ur Sim is not in Mobile,,
+                        otpid = s;      // therfore extracting the s and storing it globallly in Otpid,
                     }
 
                     @Override
-                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                        signInwithPhoneAuth(phoneAuthCredential);
+                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {   // when SIM is in ur Mobile,,
+                        signInwithPhoneAuth(phoneAuthCredential);       // calling the credential f() automatically
 
                     }
 
@@ -128,6 +133,11 @@ public class PhoneOTPActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean(SHARED_PREF_isLogin, true);
+                            editor.apply();
 
                             Intent intent = new Intent(PhoneOTPActivity.this, MainActivity.class);
                             startActivity(intent);

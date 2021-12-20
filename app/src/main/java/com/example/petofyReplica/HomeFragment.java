@@ -59,7 +59,8 @@ public class HomeFragment extends Fragment implements OnButtonListener {
     private Context context;
 
     private SearchView searchView;
-
+    private static final String SHARED_PREF_NAME = "petofyReplica";
+    SharedPreferences sharedPreferences ;
 
 
     @Override
@@ -139,7 +140,7 @@ public class HomeFragment extends Fragment implements OnButtonListener {
 
 
         //        getActivity().getShared...   Vs      getContext.getShared...
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("token", Context.MODE_PRIVATE);
+         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "this is string token");
         Log.d("okok", "HomeFragment token: " + token);
 

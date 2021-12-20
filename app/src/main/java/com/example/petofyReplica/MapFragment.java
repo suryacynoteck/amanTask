@@ -1,16 +1,26 @@
 package com.example.petofyReplica;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
+
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +56,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     GoogleMap map;
     SearchView searchView;
     Button btn_confirm;
+    ConstraintLayout layout;
+    private boolean isLoc_enable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +72,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         client = LocationServices.getFusedLocationProviderClient(getActivity());
         searchView = view.findViewById(R.id.sv_location);
         btn_confirm = view.findViewById(R.id.btn_confirm_search);
+        layout = view.findViewById(R.id.map_layout);
 
         // Async map
         /*
@@ -86,11 +99,41 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         Dexter.withContext(getActivity())
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.P)
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
 
+                        final LocationManager manager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-                        getmyLocation();        // todo: here implement if( currentlocation( isAvaliable)  else >> show dialog of setting
+
+                        if (!manager.isLocationEnabled()) {
+                            isLoc_enable= showAlertDialog_gps(view,manager);         //todo: make it eff,  via onApp on location,,
+                                                                // https://developers.google.com/android/reference/com/google/android/gms/location/SettingsApi
+                        }else {
+                            isLoc_enable = true;
+                        }
+
+                        if (isLoc_enable) {                 // todo: make it execute only,, when if(!manager.___) condition passes
+                            getmyLocation();
+                        } else {
+                            Toast.makeText(getActivity(), "still, permission not given", Toast.LENGTH_SHORT).show();        // TODO: better to show snackbar
+                            // todo: issue of overlapping with button on fragment
+//        Snackbar snackbar = Snackbar.make(view.findViewById(R.id.google_map),"Turn on the location",    // what iff, wanted to set snackbar in BottomNav.
+//                Snackbar.LENGTH_LONG)
+//                .setAction(
+//                        "retry",
+//                        new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//
+//                                startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+//
+//                            }
+//                        }
+//                );
+//        snackbar.show();
+
+                        }
 
                         searchViewImpl();
 
@@ -111,6 +154,42 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         return view;
 
     }
+
+    private boolean showAlertDialog_gps(View view,LocationManager manager) {
+
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Your GPS is disabled, do you want to enable")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.P)
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+
+                        if (manager.isLocationEnabled()) {
+                            isLoc_enable = true;          //todo: make it global,,
+                        } else {
+                            isLoc_enable = false;
+                        }
+                        }
+
+
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        isLoc_enable = false;
+                    }
+                });
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+return isLoc_enable;
+    }
+
 
     private void searchViewImpl() {
 

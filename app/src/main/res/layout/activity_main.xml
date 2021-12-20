@@ -48,6 +48,7 @@
         android:layout_height="match_parent"
 
         android:id="@+id/navmenu"
+
         app:menu="@menu/iconmenu"
         app:headerLayout="@layout/navheader"
 

@@ -56,7 +56,7 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myViewHolder> {
         holder.img.setImageResource(R.drawable.dog);
 
         String imgUrl =dataholder.get(position).getUser().getProfileImageUrl();
-        Log.d("okok", "img Url: " + imgUrl);
+//        Log.d("okok", "img Url: " + imgUrl);
 
 
         Glide.with(context)

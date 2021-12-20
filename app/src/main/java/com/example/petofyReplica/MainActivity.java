@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
     private long backPressedTime; // for back button,,
     private Toast backToast;
     private BottomNavigationView bottomNavigationView;
+
+    private static final String SHARED_PREF_NAME = "petofyReplica";
+    private static final String SHARED_PREF_isLogin = "isLogin";
+    SharedPreferences sharedPreferences ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                                 //  gettting Info from  Bundle ,,,  from LoginActivity
 
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {                // todo: check if it works
+        if (bundle != null) {                   // case when ,, we are comming from phone otp,,
 
                                                         // since calling MainActivity via Phno.  will not have any data,
             String head_txt = bundle.getString("head_txt");
@@ -110,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Log.d("okok", "onNavigationItemSelected");
 
                 switch (item.getItemId()) {
                     
@@ -128,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_logout:
                         Log.d("okok", "under menu Logout");
 
+
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
                         builder.setMessage("Do you want to Exit?")
@@ -136,6 +143,11 @@ public class MainActivity extends AppCompatActivity {
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+
+                                        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putBoolean(SHARED_PREF_isLogin,  false);
+                                        editor.apply();
 
                                         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                                         startActivity(intent);
@@ -158,10 +170,13 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
             }
+
+
+
         });
 
+        nav.bringToFront();
 
-//        Toast.makeText(MainActivity.this, "Email:"+loginResponse.getData().getEmail(), Toast.LENGTH_SHORT).show();
 
 
 
