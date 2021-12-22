@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.menu_logout:
                         Log.d("okok", "under menu Logout");
-
+//todo:  Logout if entered via Google login,,,
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                                         startActivity(intent);
+                                        finish();
 
                                     }
                                 })

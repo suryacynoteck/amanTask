@@ -92,10 +92,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        if (IsLoggedin.getLoginStatus(getBaseContext())) {
-            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-            startActivity(intent);
-        }
 
         apiInterface = ApiClient.getClient(this).create(UserService.class);       // todo:  declared public static final
 
@@ -216,6 +212,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     String token = loginResponse.getResponse().getToken().toString();
 
+// todo: save name & email via SharedPref
                     sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("token", token);

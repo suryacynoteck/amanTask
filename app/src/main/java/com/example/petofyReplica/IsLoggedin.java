@@ -14,8 +14,6 @@ public class IsLoggedin {
 
         boolean islogin;
         SharedPreferences sharedPreferences = context.getSharedPreferences("petofyReplica", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
         islogin = sharedPreferences.getBoolean("isLogin", false);
 
         return islogin;
