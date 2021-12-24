@@ -24,6 +24,7 @@ import com.example.petofyReplica.model.Login.LoginResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import com.example.petofyReplica.sqlite_DB.myDbAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String SHARED_PREF_NAME = "petofyReplica";
     private static final String SHARED_PREF_isLogin = "isLogin";
-    SharedPreferences sharedPreferences ;
+    private SharedPreferences sharedPreferences ;
+    private myDbAdapter helper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,27 @@ public class MainActivity extends AppCompatActivity {
         nav = findViewById(R.id.navmenu);
         drawerLayout = findViewById(R.id.drawer);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        helper = new myDbAdapter(this);
+
+        // todo: show data in Nav drawer
+        String data= helper.getAllData();
+        Log.d("sqlite", "allData: " + data);
+
+        String navHeaderName= helper.getNavName();
+        Log.d("sqlite", "NavName: " + navHeaderName);
+
+        String navHeaderEmail= helper.getNavEmail();
+        Log.d("sqlite", "NavName: " + navHeaderEmail);
+
+            // accessing the Navigation Header
+        View head = nav.getHeaderView(0);
+
+        TextView txt_headName = head.findViewById(R.id.txt_Head);
+        txt_headName.setText(navHeaderName);
+        TextView txt_headEmail = head.findViewById(R.id.txt_subHead);
+        txt_headEmail.setText(navHeaderEmail);
+
+
 
       bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
           @Override
@@ -88,27 +112,16 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-                                //  gettting Info from  Bundle ,,,  from LoginActivity
+/*
+//todo: update the bundle ,,, with intent getBoolean, (T/F)   , T=> if entered via petofy url,,  else F
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {                   // case when ,, we are comming from phone otp,,
 
                                                         // since calling MainActivity via Phno.  will not have any data,
-            String head_txt = bundle.getString("head_txt");
-            String subhead_txt = bundle.getString("subhead_txt");
 
-            // accessgin Header fields ( txt_head &  txt_subtext)
-            View head = nav.getHeaderView(0);
-            TextView txt_head = head.findViewById(R.id.txt_Head);
-            txt_head.setText(head_txt);
         }
-
-
-//        TextView txt_subhead = head.findViewById(R.id.txt_subHead);       //todo: extract email, / in case null set validation
-//        txt_subhead.setText(subhead_txt);
-
-        //todo: set Photo from FB / google Photo url,,
-
+*/
 
         loadFragment(new HomeFragment());               // by default ,,  HomeFragment(RecyclerView) is def. layout of MainActivity
 

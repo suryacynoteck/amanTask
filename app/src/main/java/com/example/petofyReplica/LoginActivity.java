@@ -26,6 +26,8 @@ import com.example.petofyReplica.model.Login.LoginParams;
 import com.example.petofyReplica.model.Login.LoginRequest;
 import com.example.petofyReplica.model.Login.LoginResponse;
 import com.example.petofyReplica.retrofit.ApiClient;
+import com.example.petofyReplica.sqlite_DB.myDbAdapter;
+
 
 import com.example.petofyReplica.retrofit.UserService;
 import com.facebook.CallbackManager;
@@ -68,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
+   private myDbAdapter helper;
 
 
     private String navHead_name;
@@ -112,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_button);
         otp_Signin = findViewById(R.id.img_mobile_otp);
 
+        helper = new myDbAdapter(this);
 
         email.getBackground().setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.cardview_dark_background), PorterDuff.Mode.SRC_IN);
         pass_edt.getBackground().setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.purple_500), PorterDuff.Mode.SRC_IN);      //TODO: why not purple color, set  ( by def. black color only on password)
@@ -212,7 +216,11 @@ public class LoginActivity extends AppCompatActivity {
 
                     String token = loginResponse.getResponse().getToken().toString();
 
-// todo: save name & email via SharedPref
+         // storing   UserName & Email
+                    long id = helper.insertData(loginResponse.getData().getFirstName(), loginResponse.getData().getEmail());
+                    Log.d("sqlite","id: "+id);
+
+
                     sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("token", token);
